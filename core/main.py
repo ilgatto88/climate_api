@@ -1,10 +1,15 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import RedirectResponse
 
 from core import database
 from core.models import Municipality
 
-app = FastAPI()
+app = FastAPI(
+    title="climATe API",
+    description="Climate data API",
+    version="0.1.0",
+)
 
 app.add_middleware(
     CORSMiddleware,
@@ -12,6 +17,12 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.get("/")
+async def index():
+    """Redirects the user to the documentation page."""
+    return RedirectResponse("docs")
 
 
 @app.get("/api/municipality")
@@ -26,16 +37,13 @@ async def get_municipalities() -> list[Municipality]:
 
 @app.get("/api/municipality/{m_id}", response_model=Municipality)
 async def get_municipality_by_id(m_id: int) -> Municipality:
-    """
-    Retrieves a municipality from the database based on the
-    given ID and returns it.
-    """
+    """Retrieves a municipality from the database based on the given ID."""
     response = await database.fetch_municipality_by_id(m_id)
     if response:
         return response
     raise HTTPException(
-        404,
-        f"There is no municipality in the database with this id: {m_id}",
+        status_code=404,
+        detail=f"There is no municipality in the database with {m_id=}",
     )
 
 
@@ -45,10 +53,18 @@ async def post_municipality(municipality: Municipality) -> Municipality:
     Creates a new municipality in the database with the provided data
     and returns the created municipality.
     """
+    m_id = municipality.m_id
+    municipality_exists = await database.fetch_municipality_by_id(m_id)
+    if municipality_exists:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Municipality with {m_id=} already exists.",
+        )
+
     response = await database.create_municipality(municipality)
     if response:
         return response
-    raise HTTPException(400, "Bad Request")
+    raise HTTPException(status_code=400, detail="Bad Request")
 
 
 @app.put("/api/municipality/{m_id}", response_model=Municipality)
@@ -61,8 +77,8 @@ async def update_one_municipality(m_id: int, name: str, state: str) -> Municipal
     if response:
         return response
     raise HTTPException(
-        404,
-        f"There is no municipality in the database with this id: {m_id}",
+        status_code=404,
+        detail=f"There is no municipality in the database with {m_id=}",
     )
 
 
@@ -74,8 +90,8 @@ async def delete_one_municipality(m_id: int):
     """
     response = await database.remove_municipality(m_id)
     if response:
-        return f"Successfully deleted municipality with id: {m_id}"
+        return f"Successfully deleted municipality with {m_id=}"
     raise HTTPException(
-        404,
-        f"There is no municipality in the database with this id: {m_id}",
+        status_code=404,
+        detail=f"There is no municipality in the database with {m_id=}",
     )
