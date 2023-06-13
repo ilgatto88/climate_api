@@ -11,17 +11,15 @@ def upload_municipalities_to_db():
     for _, row in shape_data.iterrows():
         print(row["g_id"], row["g_name"])
         Municipality(
-            municipality_id=row["g_id"],
-            municipality_name=row["g_name"],
-            municipality_state="",
-        ).save()
+            m_id=row["g_id"],
+            name=row["g_name"],
+            state="",
+        )
 
 
 def upload_vienna_to_db():
     """This function adds Wien to the database."""
-    Municipality(
-        municipality_id="90000", municipality_name="Wien", municipality_state=""
-    ).save()
+    Municipality(m_id=90000, name="Wien", state="")
     print("Wien uploaded to the database.")
 
 
