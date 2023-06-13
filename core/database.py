@@ -11,14 +11,6 @@ geo_database = client.GeoDatabase
 municipality_collection = geo_database.Municipality
 
 
-async def fetch_municipality_by_id(m_id: int):
-    """
-    Retrieves a municipality document from the collection based on the given ID.
-    """
-    document = await municipality_collection.find_one({"id": m_id})
-    return document
-
-
 async def fetch_all_municipalities() -> list[Municipality]:
     """
     Fetches all municipality documents from the collection
@@ -30,6 +22,14 @@ async def fetch_all_municipalities() -> list[Municipality]:
         municipalities.append(Municipality(**document))
 
     return municipalities
+
+
+async def fetch_municipality_by_id(m_id: int):
+    """
+    Retrieves a municipality document from the collection based on the given ID.
+    """
+    document = await municipality_collection.find_one({"m_id": m_id})
+    return document
 
 
 async def create_municipality(municipality: Municipality) -> Municipality:
@@ -47,7 +47,7 @@ async def update_municipality(m_id: int, name: str, state: str):
     identified by the given ID, and returns the updated document.
     """
     await municipality_collection.update_one(
-        {"id": m_id},
+        {"m_id": m_id},
         {
             "$set": {
                 "name": name,
@@ -56,7 +56,7 @@ async def update_municipality(m_id: int, name: str, state: str):
         },
     )
 
-    document = await municipality_collection.find_one({"id": id})
+    document = await municipality_collection.find_one({"m_id": id})
     return document
 
 
@@ -65,5 +65,8 @@ async def remove_municipality(m_id: int) -> bool:
     Deletes a municipality document from the collection based
     on the given ID, and returns True if the deletion was successful.
     """
-    await municipality_collection.delete_one({"id": m_id})
-    return True
+    municipality_exists = await municipality_collection.find_one({"m_id": m_id})
+    if municipality_exists:
+        await municipality_collection.delete_one({"m_id": m_id})
+        return True
+    return False
