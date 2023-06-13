@@ -25,6 +25,10 @@ def clip_box_dataset(
 def reduce_area(
     data: xr.Dataset, variable: str, municipality: gpd.GeoDataFrame
 ) -> xr.DataArray:
+    """Reduces the given dataset to a two-dimensional data array by calculating
+    the mean value of the specified variable within the boundaries of the
+    provided municipality.
+    """
     data_area = clip_dataset(data, municipality)
     data_2d = calculate_along_dimension(
         data_area[variable], ["x", "y"], xr.DataArray.mean
