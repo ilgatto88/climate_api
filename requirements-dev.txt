@@ -1,0 +1,11 @@
+black
+geopandas
+fastapi
+motor
+netCDF4
+pandas
+pylint
+rasterio
+rioxarray
+uvicorn
+xarray
