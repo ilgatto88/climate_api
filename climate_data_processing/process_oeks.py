@@ -11,7 +11,7 @@ from climate_data_processing import (
 )
 
 
-def oeks_1d_data_pipeline(settings: classes.OeksMunicipality1DData) -> pd.DataFrame:
+def oeks_1d_data_pipeline(settings: classes.MunicipalityData) -> pd.DataFrame:
     data = loaders.load_dataset(settings.create_input_file_path())
     area_data = area_selection.reduce_area(
         data, settings.parameter, settings.load_geodataframe()
@@ -25,7 +25,7 @@ def oeks_1d_data_pipeline(settings: classes.OeksMunicipality1DData) -> pd.DataFr
     return data_statistics.add_oeks_statistics(data_as_dataframe)
 
 
-def oeks_0d_data_pipeline(settings: classes.OeksMunicipality1DData) -> dict[str, float]:
+def oeks_0d_data_pipeline(settings: classes.MunicipalityData) -> dict[str, float]:
     data = loaders.load_dataset(settings.create_input_file_path())
     area_data = area_selection.reduce_area(
         data, settings.parameter, settings.load_geodataframe()

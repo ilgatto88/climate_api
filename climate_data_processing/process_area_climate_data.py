@@ -1,6 +1,5 @@
 import xarray as xr
 
-
 from climate_data_processing import (
     config,
     format_conversion,
@@ -21,7 +20,7 @@ geodf = geodataframe_tools.load_shapefile(shapefile_path)
 
 def oeks_to_geotiff_modelwise_and_aggr(source: str) -> None:
     """Creates 1991-2020 mean temperature for AT for each model from RCP2.6 (geotiff)"""
-    data = loaders.load_oeks_netcdf(source)
+    data = loaders.load_dataset(source)
     data_selected_time = data.sel(time=slice(TS_START, TS_END))
     dataarray_aggr = general.calculate_along_dimension(
         data_selected_time["tm"], "time", xr.DataArray.mean

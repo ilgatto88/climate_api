@@ -3,12 +3,12 @@ import xarray as xr
 from climate_data_processing import area_selection
 from climate_data_processing import config
 from climate_data_processing import general
-from climate_data_processing.classes import OeksMunicipality1DData
+from climate_data_processing.classes import MunicipalityData
 from climate_data_processing.loaders import load_dataset
 
 
 def create_historical_raw_data(
-    settings: OeksMunicipality1DData,
+    settings: MunicipalityData,
 ) -> dict[str, list[float]]:
     historical_input_path = (
         f"{config.HISTORICAL_DATA_PATH}spartacus-{settings.parameter}-austria-YS.nc"
@@ -21,7 +21,7 @@ def create_historical_raw_data(
     return {"rawData": raw_data}
 
 
-def create_historical_statistics(settings: OeksMunicipality1DData) -> dict[str, dict]:
+def create_historical_statistics(settings: MunicipalityData) -> dict[str, dict]:
     historical_input_path = (
         f"{config.HISTORICAL_DATA_PATH}spartacus-{settings.parameter}-austria-YS.nc"
     )
