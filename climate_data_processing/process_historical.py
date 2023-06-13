@@ -3,7 +3,7 @@ import xarray as xr
 from climate_data_processing import area_selection
 from climate_data_processing import config
 from climate_data_processing import general
-from climate_data_processing.classes import MunicipalityData
+from core.models import MunicipalityData
 from climate_data_processing.loaders import load_dataset
 
 

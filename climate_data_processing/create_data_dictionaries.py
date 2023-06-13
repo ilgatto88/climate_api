@@ -2,7 +2,7 @@ import datetime
 import pandas as pd
 
 from climate_data_processing import config
-from climate_data_processing.classes import MunicipalityData
+from core.models import MunicipalityData
 from climate_data_processing.general import prepare_array_for_json
 
 

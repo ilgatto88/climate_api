@@ -1,10 +1,10 @@
 from database.database import get_database
 
-from climate_data_processing import config
-from climate_data_processing.classes import OeksMunicipality1DData
-from climate_data_processing.process_municipality_climate_data import (
-    create_municipality_climate_data,
-)
+# from climate_data_processing import config
+# from core.models import MunicipalityData
+# from climate_data_processing.process_municipality_climate_data import (
+#     create_municipality_climate_data,
+# )
 
 
 # collection = db["municipality_data"]

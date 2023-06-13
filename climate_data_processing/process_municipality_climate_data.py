@@ -1,35 +1,34 @@
-from climate_data_processing import config
-from climate_data_processing.classes import Municipality, MunicipalityData
-from climate_data_processing.create_data_dictionaries import (
-    create_ensemble_data_dict,
-    create_historical_data_dict,
-    create_municipality_meta_dict,
+from climate_data_processing import (
+    config,
+    create_data_dictionaries,
+    format_conversion,
+    process_historical,
+    process_oeks,
 )
-from climate_data_processing.format_conversion import (
-    concatenate_dictionaries,
-)
-from climate_data_processing.process_oeks import (
-    oeks_0d_data_pipeline,
-    oeks_1d_data_pipeline,
-)
-from climate_data_processing.process_historical import (
-    create_historical_raw_data,
-    create_historical_statistics,
-)
+
+from core.models import Municipality, MunicipalityData
 
 
 def create_municipality_climate_data(settings: MunicipalityData):
-    meta_dict = create_municipality_meta_dict(settings)
+    meta_dict = create_data_dictionaries.create_municipality_meta_dict(settings)
 
-    historical_dict = create_historical_data_dict()
-    historical_dict["historical"].update(create_historical_raw_data(settings))
-    historical_dict["historical"].update(create_historical_statistics(settings))
+    historical_dict = create_data_dictionaries.create_historical_data_dict()
+    historical_dict["historical"].update(
+        process_historical.create_historical_raw_data(settings)
+    )
+    historical_dict["historical"].update(
+        process_historical.create_historical_statistics(settings)
+    )
 
-    oeks_1d_model_statistics = oeks_1d_data_pipeline(settings)
-    ensemble_dict = create_ensemble_data_dict(oeks_1d_model_statistics)
-    ensemble_dict["ensemble"]["modelStatistics0D"] = oeks_0d_data_pipeline(settings)
+    oeks_1d_model_statistics = process_oeks.oeks_1d_data_pipeline(settings)
+    ensemble_dict = create_data_dictionaries.create_ensemble_data_dict(
+        oeks_1d_model_statistics
+    )
+    ensemble_dict["ensemble"]["modelStatistics0D"] = process_oeks.oeks_0d_data_pipeline(
+        settings
+    )
 
-    climate_data_dict = concatenate_dictionaries(
+    climate_data_dict = format_conversion.concatenate_dictionaries(
         [meta_dict, historical_dict, ensemble_dict]
     )
 
