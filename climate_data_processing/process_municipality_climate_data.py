@@ -1,5 +1,5 @@
 from climate_data_processing import config
-from climate_data_processing.classes import OeksMunicipality1DData
+from climate_data_processing.classes import Municipality, MunicipalityData
 from climate_data_processing.create_data_dictionaries import (
     create_ensemble_data_dict,
     create_historical_data_dict,
@@ -18,7 +18,7 @@ from climate_data_processing.process_historical import (
 )
 
 
-def create_municipality_climate_data(settings: OeksMunicipality1DData):
+def create_municipality_climate_data(settings: MunicipalityData):
     meta_dict = create_municipality_meta_dict(settings)
 
     historical_dict = create_historical_data_dict()
@@ -37,10 +37,14 @@ def create_municipality_climate_data(settings: OeksMunicipality1DData):
 
 
 if __name__ == "__main__":
-    municipality_settings = OeksMunicipality1DData(
+    municipality = Municipality(
         municipality_id="10101",
         municipality_name="Eisenstadt",
         municipality_state="Burgenland",
+    )
+
+    municipality_settings = MunicipalityData(
+        municipality=municipality,
         scenario="rcp26",
         parameter="tm",
         temporal_resolution="annual",
@@ -51,7 +55,7 @@ if __name__ == "__main__":
     )
 
     print(
-        f"Processing {municipality_settings.municipality_name}: "
+        f"Processing {municipality_settings.municipality.municipality_name}: "
         f"{municipality_settings.scenario} - {municipality_settings.parameter} ..."
     )
     data = create_municipality_climate_data(municipality_settings)
