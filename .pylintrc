@@ -11,10 +11,12 @@
 # it should appear only once).
 #disable=
 
+extension-pkg-whitelist=pylint_pydantic
 disable=missing-module-docstring,
-        too-few-public-methods
+        too-few-public-methods,
+        no-name-in-module
 
 init-hook='import sys; sys.path.append("/home/jtordai/projects/climate_api/")'
 
 [FORMAT]
-good-names=i,j,k,ex,Run,_,pk,x,y,k,d,v,e
+good-names=i,j,k,ex,Run,_,pk,x,y,k,d,v,e,id
