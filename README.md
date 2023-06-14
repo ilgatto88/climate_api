@@ -25,8 +25,10 @@ https://askubuntu.com/questions/1203689/cannot-start-mongodb-on-wsl
 https://stackoverflow.com/questions/25903980/error-cannot-write-pid-file-to-var-run-mongodb-mongod-pid-no-such-file-or-dir
 
 ## MongoDB useful commands
-`sudo service mongod start`
-`sudo service mongod status`
+`sudo service mongod start` start mongodb
+`sudo service mongod status` check mongodb status
+
+`sudo cat /var/log/mongodb/mongod.log` check logs if database won't start up
 
 ## Install mongosh (MongoDB shell)
 `cd ~`
