@@ -5,7 +5,6 @@ from climate_data_processing import (
     process_historical,
     process_oeks,
 )
-
 from core.models import Municipality, MunicipalityData
 
 
@@ -37,9 +36,9 @@ def create_municipality_climate_data(settings: MunicipalityData):
 
 if __name__ == "__main__":
     municipality = Municipality(
-        municipality_id="10101",
-        municipality_name="Eisenstadt",
-        municipality_state="Burgenland",
+        m_id=10101,
+        name="Eisenstadt",
+        state="Burgenland",
     )
 
     municipality_settings = MunicipalityData(
@@ -54,7 +53,7 @@ if __name__ == "__main__":
     )
 
     print(
-        f"Processing {municipality_settings.municipality.municipality_name}: "
+        f"Processing {municipality_settings.municipality.name}: "
         f"{municipality_settings.scenario} - {municipality_settings.parameter} ..."
     )
     data = create_municipality_climate_data(municipality_settings)
