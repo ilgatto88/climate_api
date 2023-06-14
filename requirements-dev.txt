@@ -6,6 +6,8 @@ netCDF4
 pandas
 pylint
 rasterio
+requests
 rioxarray
+ruff
 uvicorn
 xarray
