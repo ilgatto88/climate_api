@@ -1,5 +1,18 @@
 EPSG_LCC = "epsg:3416"
 
+STATES = {
+    "1": "Burgenland",
+    "2": "Kärnten",
+    "3": "Niederösterreich",
+    "4": "Oberösterreich",
+    "5": "Salzburg",
+    "6": "Steiermark",
+    "7": "Tirol",
+    "8": "Vorarlberg",
+    "9": "Wien",
+}
+
+
 VIENNA_GIDS = [
     "90101",
     "90201",
