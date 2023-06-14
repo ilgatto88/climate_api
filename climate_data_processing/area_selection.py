@@ -1,5 +1,4 @@
 import geopandas as gpd
-import rioxarray  # pylint: disable=unused-import
 import xarray as xr
 
 from climate_data_processing.general import calculate_along_dimension

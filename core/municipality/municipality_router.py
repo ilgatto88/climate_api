@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 
-from core.models import Municipality
+from core.misc_models import Municipality
 from core.municipality import municipality_db
 
 router = APIRouter(prefix="/api/municipality", tags=["municipality"])

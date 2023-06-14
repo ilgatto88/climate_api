@@ -1,17 +1,18 @@
 import datetime
+
 import pandas as pd
 
 from climate_data_processing import config
-from core.models import MunicipalityData
 from climate_data_processing.general import prepare_array_for_json
+from core.misc_models import MunicipalityDataSettings
 
 
-def create_municipality_meta_dict(meta: MunicipalityData) -> dict:
+def create_municipality_meta_dict(meta: MunicipalityDataSettings) -> dict:
     return {
         "meta": {
-            "municipalityId": meta.municipality.municipality_id,
-            "municipalityName": meta.municipality.municipality_name,
-            "municipalityState": meta.municipality.municipality_state,
+            "municipalityId": meta.municipality.m_id,
+            "municipalityName": meta.municipality.name,
+            "municipalityState": meta.municipality.state,
             "scenario": meta.scenario,
             "parameter": meta.parameter,
             "timeResolution": meta.temporal_resolution,

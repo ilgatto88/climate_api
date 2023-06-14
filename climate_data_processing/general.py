@@ -1,9 +1,9 @@
 import numbers
+from typing import Callable, Union
 
 import numpy as np
 import pandas as pd
 import xarray as xr
-from typing import Callable, Union
 
 
 def remove_dimension(dataset: xr.Dataset, dimension: str) -> xr.Dataset:

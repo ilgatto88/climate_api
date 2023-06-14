@@ -5,10 +5,11 @@ from climate_data_processing import (
     process_historical,
     process_oeks,
 )
-from core.models import Municipality, MunicipalityData
+from core.api_models import Municipality
+from core.misc_models import MunicipalityDataSettings
 
 
-def create_municipality_climate_data(settings: MunicipalityData):
+def create_municipality_climate_data(settings: MunicipalityDataSettings):
     meta_dict = create_data_dictionaries.create_municipality_meta_dict(settings)
 
     historical_dict = create_data_dictionaries.create_historical_data_dict()
@@ -41,7 +42,7 @@ if __name__ == "__main__":
         state="Burgenland",
     )
 
-    municipality_settings = MunicipalityData(
+    municipality_settings = MunicipalityDataSettings(
         municipality=municipality,
         scenario="rcp26",
         parameter="tm",
