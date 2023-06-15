@@ -11,6 +11,6 @@ def concatenate_dictionaries(dictionary_list: list[dict]) -> dict:
     dicts = {}
     for d in dictionary_list:
         for k, v in d.items():
-            dicts.setdefault(k, []).append(v)
+            dicts[k] = v
 
     return dicts
