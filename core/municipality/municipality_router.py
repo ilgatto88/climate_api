@@ -1,12 +1,12 @@
 from fastapi import APIRouter, HTTPException
 
-from core.misc_models import Municipality
 from core.municipality import municipality_db
+from core.schemas import Municipality
 
-router = APIRouter(prefix="/api/municipality", tags=["municipality"])
+router = APIRouter(prefix="/api/Municipalities", tags=["Municipalities"])
 
 
-@router.get("/")
+@router.get("/", name="Get all municipalities")
 async def get_municipalities() -> list[Municipality]:
     """
     Retrieves all municipalities from the database and
@@ -28,7 +28,7 @@ async def get_municipality_by_id(m_id: int) -> Municipality:
     )
 
 
-@router.post("/", response_model=Municipality)
+@router.post("/", response_model=Municipality, status_code=201)
 async def post_municipality(municipality: Municipality) -> Municipality:
     """
     Creates a new municipality in the database with the provided data
@@ -48,7 +48,7 @@ async def post_municipality(municipality: Municipality) -> Municipality:
     raise HTTPException(status_code=400, detail="Bad Request")
 
 
-@router.put("/{m_id}", response_model=Municipality)
+@router.put("/{m_id}", response_model=Municipality, status_code=201)
 async def update_one_municipality(m_id: int, name: str, state: str) -> Municipality:
     """
     Updates the name and state fields of a municipality in the database
