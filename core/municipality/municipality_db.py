@@ -1,9 +1,9 @@
 import asyncio
 
-from core.database import geo_database
-from core.misc_models import Municipality
+from core.database import geo
+from core.schemas import Municipality
 
-municipality_collection = geo_database.Municipality
+municipality_collection = geo.Municipality
 
 
 async def fetch_all_municipalities() -> list[Municipality]:
