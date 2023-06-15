@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 
 from core.municipality import municipality_router
+from core.municipality_data import municipality_data_router
 
 app = FastAPI(
     title="climATe API",
@@ -11,6 +12,8 @@ app = FastAPI(
 )
 
 app.include_router(municipality_router.router)
+app.include_router(municipality_data_router.router)
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
