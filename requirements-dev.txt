@@ -1,10 +1,15 @@
+bcrypt
 black
+email-validator
+fastapi==0.97.0
 geopandas
-fastapi
 motor
 netCDF4
 pandas
+PyJWT
+pydantic[email]
 pylint
+python-decouple
 rasterio
 requests
 rioxarray

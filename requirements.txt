@@ -1,3 +1,8 @@
-fastapi
+bcrypt
+email-validator
+fastapi==0.97.0
 motor
+PyJWT
+pydantic[email]
+python-decouple
 uvicorn
