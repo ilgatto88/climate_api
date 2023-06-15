@@ -1,9 +1,10 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 
+from core.auth.auth_bearer import JWTBearer
 from core.municipality_data import municipality_data_db
 from core.schemas import MunicipalityData
 
-router = APIRouter(prefix="/api/MunicipalityData", tags=["MunicipalityData"])
+router = APIRouter(prefix="/MunicipalityData", tags=["MunicipalityData"])
 
 
 @router.get("/{m_id}", response_model=MunicipalityData)
@@ -21,7 +22,12 @@ async def get_municipality_data_by_id(m_id: int) -> MunicipalityData:
     )
 
 
-@router.post("/", response_model=MunicipalityData, status_code=201)
+@router.post(
+    "/",
+    response_model=MunicipalityData,
+    status_code=201,
+    dependencies=[Depends(JWTBearer())],
+)
 async def post_municipality(municipality_data: MunicipalityData) -> MunicipalityData:
     """
     Creates a new municipality in the database with the provided data

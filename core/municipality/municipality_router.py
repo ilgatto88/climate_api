@@ -1,9 +1,10 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 
+from core.auth.auth_bearer import JWTBearer
 from core.municipality import municipality_db
 from core.schemas import Municipality
 
-router = APIRouter(prefix="/api/Municipalities", tags=["Municipalities"])
+router = APIRouter(prefix="/Municipalities", tags=["Municipalities"])
 
 
 @router.get("/", name="Get all municipalities")
@@ -28,8 +29,15 @@ async def get_municipality_by_id(m_id: int) -> Municipality:
     )
 
 
-@router.post("/", response_model=Municipality, status_code=201)
-async def post_municipality(municipality: Municipality) -> Municipality:
+@router.post(
+    "/",
+    response_model=Municipality,
+    status_code=201,
+    dependencies=[Depends(JWTBearer())],
+)
+async def post_municipality(
+    municipality: Municipality,
+) -> Municipality:
     """
     Creates a new municipality in the database with the provided data
     and returns the created municipality.
@@ -48,7 +56,12 @@ async def post_municipality(municipality: Municipality) -> Municipality:
     raise HTTPException(status_code=400, detail="Bad Request")
 
 
-@router.put("/{m_id}", response_model=Municipality, status_code=201)
+@router.put(
+    "/{m_id}",
+    response_model=Municipality,
+    status_code=201,
+    dependencies=[Depends(JWTBearer())],
+)
 async def update_one_municipality(m_id: int, name: str, state: str) -> Municipality:
     """
     Updates the name and state fields of a municipality in the database
@@ -63,7 +76,7 @@ async def update_one_municipality(m_id: int, name: str, state: str) -> Municipal
     )
 
 
-@router.delete("/{m_id}")
+@router.delete("/{m_id}", dependencies=[Depends(JWTBearer())])
 async def delete_one_municipality(m_id: int):
     """
     Deletes a municipality from the database based on the given ID.
