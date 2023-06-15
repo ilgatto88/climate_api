@@ -2,18 +2,16 @@ import xarray as xr
 
 from climate_data_processing import area_selection, config, general
 from climate_data_processing.loaders import load_dataset
-from core.misc_models import MunicipalityDataSettings
+from core.models import MunicipalityDataSettings
 
 
 def create_historical_raw_data(
     settings: MunicipalityDataSettings,
 ) -> dict[str, list[float]]:
-    historical_input_path = (
-        f"{config.HISTORICAL_DATA_PATH}spartacus-{settings.parameter}-austria-YS.nc"
-    )
+    historical_input_path = settings.create_historical_input_file_path()
     data = load_dataset(path=historical_input_path)
     area_data = area_selection.reduce_area(
-        data, settings.parameter, settings.load_geodataframe()
+        data, settings.climateParameter, settings.load_geodataframe()
     )
     raw_data = [round(float(value), 1) for value in area_data.values]
     return {"rawData": raw_data}
@@ -23,7 +21,7 @@ def create_historical_statistics(settings: MunicipalityDataSettings) -> dict[str
     historical_input_path = settings.create_historical_input_file_path()
     data = load_dataset(path=historical_input_path)
     area_data = area_selection.reduce_area(
-        data, settings.parameter, settings.load_geodataframe()
+        data, settings.climateParameter, settings.load_geodataframe()
     )
 
     statistics_dictionaries = {}
@@ -31,7 +29,7 @@ def create_historical_statistics(settings: MunicipalityDataSettings) -> dict[str
         period_data = create_historical_0d_stats(area_data, period[0], period[1])
         statistics_dictionaries.update(period_data)
 
-    return {"analysisStatistics0D": statistics_dictionaries}
+    return {"statistics0D": statistics_dictionaries}
 
 
 def create_historical_0d_stats(data: xr.DataArray, start: str, end: str):
