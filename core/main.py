@@ -7,6 +7,7 @@ from core.municipality import municipality_router
 from core.municipality_data import municipality_data_router
 
 v1_prefix = "/api/v1"
+BASE_API_URI = "http://127.0.0.1:8000"
 
 app = FastAPI(
     title="climATe API",
