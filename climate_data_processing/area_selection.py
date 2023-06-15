@@ -5,7 +5,10 @@ from climate_data_processing.general import calculate_along_dimension
 
 
 def clip_dataset(dataset: xr.Dataset, area: gpd.GeoDataFrame) -> xr.Dataset:
-    """Clips the dataset using the geometry of a GeoDataFrame and returns the clipped dataset."""
+    """
+    Clips the dataset using the geometry of a GeoDataFrame and
+    returns the clipped dataset.
+    """
     return dataset.rio.clip(area.geometry)
 
 
