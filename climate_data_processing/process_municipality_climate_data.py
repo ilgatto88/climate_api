@@ -5,11 +5,10 @@ from climate_data_processing import (
     process_historical,
     process_oeks,
 )
-from core.api_models import Municipality
-from core.misc_models import MunicipalityDataSettings
+from core.models import MunicipalityDataSettings
 
 
-def create_municipality_climate_data(settings: MunicipalityDataSettings):
+def create_municipality_climate_data(settings: MunicipalityDataSettings) -> dict:
     meta_dict = create_data_dictionaries.create_municipality_meta_dict(settings)
 
     historical_dict = create_data_dictionaries.create_historical_data_dict()
@@ -20,13 +19,20 @@ def create_municipality_climate_data(settings: MunicipalityDataSettings):
         process_historical.create_historical_statistics(settings)
     )
 
-    oeks_1d_model_statistics = process_oeks.oeks_1d_data_pipeline(settings)
-    ensemble_dict = create_data_dictionaries.create_ensemble_data_dict(
-        oeks_1d_model_statistics
-    )
-    ensemble_dict["ensemble"]["modelStatistics0D"] = process_oeks.oeks_0d_data_pipeline(
-        settings
-    )
+    ensemble_dict = {"ensemble": {}}
+
+    for scenario in ["rcp26", "rcp85"]:
+        ensemble_dict["ensemble"].update({scenario: {}})
+
+        ensemble_dict["ensemble"][scenario].update(
+            create_data_dictionaries.create_ensemble_data_dict(
+                process_oeks.oeks_1d_data_pipeline(settings, scenario)
+            )
+        )
+
+        ensemble_dict["ensemble"][scenario].update(
+            process_oeks.oeks_0d_data_pipeline(settings, scenario)
+        )
 
     climate_data_dict = format_conversion.concatenate_dictionaries(
         [meta_dict, historical_dict, ensemble_dict]
@@ -36,16 +42,9 @@ def create_municipality_climate_data(settings: MunicipalityDataSettings):
 
 
 if __name__ == "__main__":
-    municipality = Municipality(
-        m_id=10101,
-        name="Eisenstadt",
-        state="Burgenland",
-    )
-
     municipality_settings = MunicipalityDataSettings(
-        municipality=municipality,
-        scenario="rcp26",
-        parameter="tm",
+        municipalityId=10101,
+        climateParameter="tm",
         temporal_resolution="annual",
         analysis_start_year=config.ANALYSIS_START_YEAR,
         analysis_end_year=config.ANALYSIS_END_YEAR,
@@ -54,8 +53,8 @@ if __name__ == "__main__":
     )
 
     print(
-        f"Processing {municipality_settings.municipality.name}: "
-        f"{municipality_settings.scenario} - {municipality_settings.parameter} ..."
+        f"Processing {municipality_settings.municipalityId} - "
+        f"{municipality_settings.climateParameter} ..."
     )
     data = create_municipality_climate_data(municipality_settings)
     print(data)
