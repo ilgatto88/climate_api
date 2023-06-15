@@ -9,12 +9,12 @@ def add_oeks_statistics(data: pd.DataFrame) -> pd.DataFrame:
     model_min = data.min(axis=1)
     model_max = data.max(axis=1)
 
-    data["Model_minimum"] = model_min
-    data["Model_10percentile"] = model_10perc
-    data["Model_median"] = model_median
-    data["Model_mean"] = model_mean
-    data["Model_90percentile"] = model_90perc
-    data["Model_maximum"] = model_max
+    data["minimum"] = model_min
+    data["lowerPercentile"] = model_10perc
+    data["median"] = model_median
+    data["mean"] = model_mean
+    data["upperPercentile"] = model_90perc
+    data["maximum"] = model_max
 
     data = data.round(decimals=1)
 

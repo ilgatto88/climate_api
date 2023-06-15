@@ -11,12 +11,12 @@ ENSEMBLE_START_YEAR = 1970
 ENSEMBLE_END_YEAR = 2100
 
 STATISTICS = [
-    "Model_minimum",
-    "Model_10percentile",
-    "Model_median",
-    "Model_mean",
-    "Model_90percentile",
-    "Model_maximum",
+    "minimum",
+    "lowerPercentile",
+    "median",
+    "mean",
+    "upperPercentile",
+    "maximum",
 ]
 
 STATISTIC_PERIODS_OEKS = [
