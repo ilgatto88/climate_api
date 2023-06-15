@@ -4,7 +4,7 @@ from climate_data_processing import config, geodataframe_tools, static_geo
 
 
 def populate(m_id: int, name: str, state: str):
-    API_URI = "http://127.0.0.1:8000/api/municipality/"
+    API_URI = "http://127.0.0.1:8000/api/Municipalities/"
     requests.post(
         API_URI,
         json={"m_id": m_id, "name": name, "state": state},
