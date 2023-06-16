@@ -1,6 +1,6 @@
 from fastapi import HTTPException, Request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from jwt.exceptions import DecodeError
+from jwt.exceptions import DecodeError, ExpiredSignatureError
 
 from core.auth.auth_handler import decodeJWT
 
@@ -31,7 +31,7 @@ class JWTBearer(HTTPBearer):
 
         try:
             payload = decodeJWT(jwtoken)
-        except DecodeError:
+        except (DecodeError, ExpiredSignatureError):
             payload = None
         if payload:
             isTokenValid = True
