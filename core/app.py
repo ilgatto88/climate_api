@@ -19,9 +19,21 @@ app = FastAPI(
     version=API_VERSION,
 )
 
-app.include_router(municipality_data_router.router, prefix=v1_prefix)
-app.include_router(municipality_router.router, prefix=v1_prefix)
-app.include_router(auth_router.router)
+app.include_router(
+    municipality_data_router.router,
+    prefix=f"{v1_prefix}/MunicipalityData",
+    tags=["MunicipalityData"],
+)
+app.include_router(
+    municipality_router.router,
+    prefix=f"{v1_prefix}/Municipalities",
+    tags=["Municipalities"],
+)
+app.include_router(
+    auth_router.router,
+    prefix="/api/Users",
+    tags=["Users"],
+)
 
 app.add_middleware(
     CORSMiddleware,

@@ -5,7 +5,7 @@ from core.auth import auth_db
 from core.auth.auth_handler import signJWT
 from core.models import UserLoginSchema, UserSchema
 
-router = APIRouter(prefix="/api/Users", tags=["Users"])
+router = APIRouter()
 
 
 @router.post("/signup", include_in_schema=False)

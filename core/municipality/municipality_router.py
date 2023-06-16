@@ -4,7 +4,7 @@ from core.auth.auth_bearer import JWTBearer
 from core.models import Municipality
 from core.municipality import municipality_db
 
-router = APIRouter(prefix="/Municipalities", tags=["Municipalities"])
+router = APIRouter()
 
 
 @router.get("/", name="Get all municipalities")
