@@ -2,7 +2,7 @@ import xarray as xr
 
 from climate_data_processing import area_selection, config, general
 from climate_data_processing.loaders import load_dataset
-from core.models import MunicipalityDataSettings
+from climate_data_processing.models import MunicipalityDataSettings
 
 
 def create_historical_raw_data(

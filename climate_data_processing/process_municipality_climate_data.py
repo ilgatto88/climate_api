@@ -5,7 +5,7 @@ from climate_data_processing import (
     process_historical,
     process_oeks,
 )
-from core.models import MunicipalityDataSettings
+from climate_data_processing.models import MunicipalityDataSettings
 
 
 def create_municipality_climate_data(settings: MunicipalityDataSettings) -> dict:

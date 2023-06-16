@@ -8,7 +8,7 @@ from climate_data_processing import (
     general,
     loaders,
 )
-from core.models import MunicipalityDataSettings
+from climate_data_processing.models import MunicipalityDataSettings
 
 
 def oeks_1d_data_pipeline(

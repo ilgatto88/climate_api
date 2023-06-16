@@ -1,8 +1,8 @@
 import requests
 
 from climate_data_processing import config, process_municipality_climate_data
+from climate_data_processing.models import MunicipalityDataSettings
 from core.app import BASE_API_URI
-from core.models import MunicipalityDataSettings
 
 
 def populate(data: dict, token: str):
