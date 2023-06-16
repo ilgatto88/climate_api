@@ -13,18 +13,14 @@ if not isinstance(JWT_ALGORITHM, str) or not isinstance(JWT_SECRET, str):
     )
 
 
-def token_response(token: str):
-    return {"access_token": token}
-
-
 def signJWT(user_id: str) -> dict[str, str]:
     payload = {"user_id": user_id, "expires": time.time() + 600}
     token = jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
 
-    return token_response(token)
+    return {"access_token": token}
 
 
-def decodeJWT(token: str) -> dict:
+def decodeJWT(token: str) -> dict | None:
     try:
         decoded_token = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
         return (
@@ -33,4 +29,4 @@ def decodeJWT(token: str) -> dict:
             else None  # type: ignore
         )
     except DecodeError:
-        return {"message": "Error, token couldn't be decoded!"}
+        return None
