@@ -1,35 +1,22 @@
-import logging
-import logging.config
-import random
-import string
-import time
-from os import path
-
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.openapi.utils import get_openapi
 from fastapi.responses import RedirectResponse
 
 from core.auth import auth_router
 from core.municipality import municipality_router
 from core.municipality_data import municipality_data_router
 
-# setup loggers
-log_file_path = path.join(path.dirname(path.abspath(__file__)), "logging.conf")
-try:
-    logging.config.fileConfig(log_file_path, disable_existing_loggers=False)
-except Exception as e:
-    print("Error loading logging configuration:")
-    print(e)
-
-logger = logging.getLogger(__name__)
-
 v1_prefix = "/api/v1"
 BASE_API_URI = "http://127.0.0.1:8000"
 
+API_NAME = "climATe API"
+API_VERSION = "0.2.0"
+
 app = FastAPI(
-    title="climATe API",
+    title=API_NAME,
     description="Climate data API",
-    version="0.1.0",
+    version=API_VERSION,
 )
 
 app.include_router(municipality_data_router.router, prefix=v1_prefix)
@@ -50,21 +37,29 @@ async def index():
     return RedirectResponse("/docs")
 
 
-@app.middleware("http")
-async def log_requests(request: Request, call_next):
-    idem = "".join(random.choices(string.ascii_uppercase + string.digits, k=6))
-    logger.info(f"rid={idem} start request path={request.url.path}")
-    start_time = time.time()
+def custom_openapi():
+    schemas_to_pop = [
+        "MunicipalityDataMeta",
+        "MunicipalityDataHistorical",
+        "MunicipalityDataRCP",
+        "MunicipalityDataEnsemble",
+        "MunicipalityDataHistorical",
+        "MunicipalityDataMeta",
+        "Statistics1D",
+        "UserLoginSchema",
+        "ValidationError",
+        "HTTPValidationError",
+    ]
 
-    response = await call_next(request)
+    if app.openapi_schema:
+        return app.openapi_schema
 
-    process_time = (time.time() - start_time) * 1000
-    formatted_process_time = "{0:.2f}".format(process_time)
-    logger.info(
-        (
-            f"rid={idem} completed_in={formatted_process_time}ms "
-            f"status_code={response.status_code}"
-        )
-    )
+    openapi_schema = get_openapi(title=API_NAME, version=API_VERSION, routes=app.routes)
+    for schema in schemas_to_pop:
+        openapi_schema["components"]["schemas"].pop(schema, None)
 
-    return response
+    app.openapi_schema = openapi_schema
+    return app.openapi_schema
+
+
+app.openapi = custom_openapi
