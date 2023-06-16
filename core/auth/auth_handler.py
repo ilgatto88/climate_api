@@ -34,4 +34,4 @@ def decodeJWT(token: str) -> dict:
             else None  # type: ignore
         )
     except DecodeError:
-        return {"message": "Token couln't be decoded!"}
+        return {"message": "Error, token couldn't be decoded!"}
