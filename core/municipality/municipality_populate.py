@@ -1,7 +1,7 @@
 import requests
 
 from climate_data_processing import config, geodataframe_tools, static_geo
-from core.main import BASE_API_URI
+from core.app import BASE_API_URI
 
 
 def populate(m_id: int, name: str, state: str, token: str):

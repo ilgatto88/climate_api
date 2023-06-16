@@ -1,7 +1,7 @@
 import requests
 
 from climate_data_processing import config, process_municipality_climate_data
-from core.main import BASE_API_URI
+from core.app import BASE_API_URI
 from core.models import MunicipalityDataSettings
 
 
