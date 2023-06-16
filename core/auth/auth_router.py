@@ -3,7 +3,7 @@ from fastapi import APIRouter, Body, HTTPException
 
 from core.auth import auth_db
 from core.auth.auth_handler import signJWT
-from core.schemas import UserLoginSchema, UserSchema
+from core.models import UserLoginSchema, UserSchema
 
 router = APIRouter(prefix="/api/Users", tags=["Users"])
 

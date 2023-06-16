@@ -1,5 +1,5 @@
 from core.database import climate_data
-from core.schemas import MunicipalityData
+from core.models import MunicipalityData
 
 municipality_data_collection = climate_data.MunicipalityData
 

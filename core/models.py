@@ -33,6 +33,15 @@ class Municipality(BaseModel):
     name: str
     state: str
 
+    class Config:
+        schema_extra = {
+            "example": {
+                "m_id": 99999,
+                "name": "Testcity",
+                "state": "Teststate",
+            }
+        }
+
 
 class MunicipalityDataMeta(BaseModel):
     """Helper class for MunicipalityData"""
@@ -80,7 +89,7 @@ class MunicipalityDataEnsemble(BaseModel):
 
 
 class MunicipalityData(BaseModel):
-    """Helper class for MunicipalityData"""
+    """A very complex class with many nested dictionaries."""
 
     meta: MunicipalityDataMeta
     historical: MunicipalityDataHistorical

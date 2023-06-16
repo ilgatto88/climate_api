@@ -4,7 +4,7 @@ import bcrypt
 from pydantic import EmailStr
 
 from core.database import admin
-from core.schemas import UserSchema
+from core.models import UserSchema
 
 user_collection = admin.User
 
