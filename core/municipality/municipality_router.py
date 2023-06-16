@@ -18,7 +18,7 @@ async def get_municipalities() -> list[Municipality]:
 
 
 @router.get("/{m_id}", response_model=Municipality)
-async def get_municipality_by_id(m_id: int) -> Municipality:
+async def get_municipality_by_id(m_id: int) -> dict[str, str]:
     """Retrieves a municipality from the database based on the given ID."""
     response = await municipality_db.fetch_municipality_by_id(m_id)
     if response:
@@ -62,7 +62,7 @@ async def post_municipality(
     status_code=201,
     dependencies=[Depends(JWTBearer())],
 )
-async def update_one_municipality(m_id: int, name: str, state: str) -> Municipality:
+async def update_one_municipality(m_id: int, name: str, state: str) -> dict[str, str]:
     """
     Updates the name and state fields of a municipality in the database
     based on the given ID and returns the updated municipality as a response.
@@ -77,7 +77,7 @@ async def update_one_municipality(m_id: int, name: str, state: str) -> Municipal
 
 
 @router.delete("/{m_id}", dependencies=[Depends(JWTBearer())])
-async def delete_one_municipality(m_id: int):
+async def delete_one_municipality(m_id: int) -> str:
     """
     Deletes a municipality from the database based on the given ID.
     Returns a success message if the deletion is successful.
