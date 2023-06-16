@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.openapi.utils import get_openapi
 from fastapi.responses import RedirectResponse
 
 from core.auth import auth_router
@@ -47,31 +46,3 @@ app.add_middleware(
 async def index():
     """Redirects the user to the documentation page."""
     return RedirectResponse("/docs")
-
-
-def custom_openapi():
-    schemas_to_pop = [
-        "MunicipalityDataMeta",
-        "MunicipalityDataHistorical",
-        "MunicipalityDataRCP",
-        "MunicipalityDataEnsemble",
-        "MunicipalityDataHistorical",
-        "MunicipalityDataMeta",
-        "Statistics1D",
-        "UserLoginSchema",
-        "ValidationError",
-        "HTTPValidationError",
-    ]
-
-    if app.openapi_schema:
-        return app.openapi_schema
-
-    openapi_schema = get_openapi(title=API_NAME, version=API_VERSION, routes=app.routes)
-    for schema in schemas_to_pop:
-        openapi_schema["components"]["schemas"].pop(schema, None)
-
-    app.openapi_schema = openapi_schema
-    return app.openapi_schema
-
-
-app.openapi = custom_openapi
