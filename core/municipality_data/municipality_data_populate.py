@@ -1,15 +1,18 @@
 import requests
 
 from climate_data_processing import config, process_municipality_climate_data
+from core.main import BASE_API_URI
 from core.models import MunicipalityDataSettings
 
 
-def populate(data: dict):
-    API_URI = "http://127.0.0.1:8000/api/MunicipalityData/"
-    requests.post(
-        API_URI,
-        json=data,
-    )
+def populate(data: dict, token: str):
+    API_URI = f"{BASE_API_URI}/api/v1/MunicipalityData/"
+    headers = {
+        "accept": "application/json",
+        "Authorization": "Bearer {}".format(token),
+        "Content-Type": "application/json",
+    }
+    requests.post(API_URI, json=data, headers=headers)
 
 
 if __name__ == "__main__":
@@ -23,6 +26,8 @@ if __name__ == "__main__":
         ensemble_end_year=config.ENSEMBLE_END_YEAR,
     )
 
+    token = "Testtoken"
+
     print(
         f"Processing {municipality_settings.municipalityId} - "
         f"{municipality_settings.climateParameter} ..."
@@ -31,5 +36,5 @@ if __name__ == "__main__":
         municipality_settings
     )
     print("Processing finished, now uploading to database ...")
-    populate(data)
+    populate(data, token)
     print("Climate data uploaded to database")
