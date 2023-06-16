@@ -46,8 +46,8 @@ async def check_user(user: UserLoginSchema) -> bool:
     if response_user:
         hashed_password = response_user.get("password")
         entered_password = user.password.encode()
-        if hashed_password is not None and bcrypt.checkpw(
-            entered_password, hashed_password.encode()
-        ):
-            return True
+        if hashed_password is not None:
+            password_valid = bcrypt.checkpw(entered_password, hashed_password.encode())
+            if password_valid:
+                return True
     return False
