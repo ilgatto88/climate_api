@@ -2,9 +2,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 
-from core.auth import auth_router
-from core.municipality import municipality_router
-from core.municipality_data import municipality_data_router
+from app.auth import auth_router
+from app.municipality import municipality_router
+from app.municipality_data import municipality_data_router
 
 v1_prefix = "/api/v1"
 BASE_API_URI = "http://127.0.0.1:8000"

@@ -1,5 +1,5 @@
-from core.app.database import climate_data
-from core.app.models import MunicipalityData
+from app.core.database import climate_data
+from app.core.models import MunicipalityData
 
 municipality_data_collection = climate_data.MunicipalityData
 
@@ -22,4 +22,5 @@ async def create_municipality_data(
     and returns the created municipality data.
     """
     await municipality_data_collection.insert_one(municipality_data.dict())
+    return municipality_data
     return municipality_data

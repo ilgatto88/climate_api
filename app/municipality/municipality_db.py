@@ -1,7 +1,7 @@
 import asyncio
 
-from core.app.database import geo
-from core.app.models import Municipality
+from app.core.database import geo
+from app.core.models import Municipality
 
 municipality_collection = geo.Municipality
 
@@ -83,4 +83,5 @@ if __name__ == "__main__":
         loop.run_until_complete(remove_all_municipalities())
         # loop.run_until_complete(remove_municipality(99999))
     except KeyboardInterrupt:
+        pass
         pass

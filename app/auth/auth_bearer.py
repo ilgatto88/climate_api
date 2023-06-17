@@ -2,7 +2,7 @@ from fastapi import HTTPException, Request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jwt.exceptions import DecodeError, ExpiredSignatureError
 
-from core.auth.auth_handler import decodeJWT
+from app.auth.auth_handler import decodeJWT
 
 
 class JWTBearer(HTTPBearer):
