@@ -1,8 +1,9 @@
 bcrypt
 email-validator
-fastapi==0.97.0
+fastapi[all]==0.97.0
 motor
 PyJWT
+pydantic
 pydantic[email]
 python-decouple
-uvicorn
+uvicorn[standard]
