@@ -23,4 +23,3 @@ async def create_municipality_data(
     """
     await municipality_data_collection.insert_one(municipality_data.dict())
     return municipality_data
-    return municipality_data
