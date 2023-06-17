@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 import geopandas
 
-from climate_data_processing import config, geodataframe_tools
+from api_data_processing import config, geodataframe_tools
 
 
 @dataclass

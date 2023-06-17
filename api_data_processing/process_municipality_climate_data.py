@@ -1,11 +1,11 @@
-from climate_data_processing import (
+from api_data_processing import (
     config,
     create_data_dictionaries,
     format_conversion,
     process_historical,
     process_oeks,
 )
-from climate_data_processing.models import MunicipalityDataSettings
+from api_data_processing.models import MunicipalityDataSettings
 
 
 def create_municipality_climate_data(settings: MunicipalityDataSettings) -> dict:

@@ -1,14 +1,14 @@
 import pandas as pd
 import xarray as xr
 
-from climate_data_processing import (
+from api_data_processing import (
     area_selection,
     config,
     data_statistics,
     general,
     loaders,
 )
-from climate_data_processing.models import MunicipalityDataSettings
+from api_data_processing.models import MunicipalityDataSettings
 
 
 def oeks_1d_data_pipeline(

@@ -1,7 +1,7 @@
 import geopandas as gpd
 import xarray as xr
 
-from climate_data_processing.general import calculate_along_dimension
+from api_data_processing.general import calculate_along_dimension
 
 
 def clip_dataset(dataset: xr.Dataset, area: gpd.GeoDataFrame) -> xr.Dataset:
