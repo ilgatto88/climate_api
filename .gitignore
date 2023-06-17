@@ -163,3 +163,4 @@ cython_debug/
 .vscode/
 api_data/
 env_climate_api/
+data/mongo/
