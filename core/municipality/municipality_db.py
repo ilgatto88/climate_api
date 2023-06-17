@@ -1,7 +1,7 @@
 import asyncio
 
-from core.database import geo
-from core.models import Municipality
+from core.app.database import geo
+from core.app.models import Municipality
 
 municipality_collection = geo.Municipality
 

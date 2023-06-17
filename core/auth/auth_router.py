@@ -1,9 +1,9 @@
 import bcrypt
 from fastapi import APIRouter, Body, HTTPException
 
+from core.app.models import UserLoginSchema, UserSchema
 from core.auth import auth_db
 from core.auth.auth_handler import signJWT
-from core.models import UserLoginSchema, UserSchema
 
 router = APIRouter()
 

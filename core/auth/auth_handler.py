@@ -4,8 +4,8 @@ import jwt
 from decouple import UndefinedValueError, config
 from jwt.exceptions import DecodeError
 
-JWT_SECRET = config("secret")
-JWT_ALGORITHM = config("algorithm")
+JWT_SECRET = config("JWT_SECRET")
+JWT_ALGORITHM = config("JWT_ALGORITHM")
 
 if not isinstance(JWT_ALGORITHM, str) or not isinstance(JWT_SECRET, str):
     raise UndefinedValueError(
