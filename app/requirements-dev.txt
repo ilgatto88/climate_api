@@ -2,6 +2,7 @@ bcrypt
 black
 email-validator
 fastapi[all]==0.97.0
+gunicorn
 motor
 PyJWT
 pydantic
