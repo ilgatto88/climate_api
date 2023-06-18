@@ -1,3 +1,4 @@
+import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
@@ -46,3 +47,7 @@ app.add_middleware(
 async def index():
     """Redirects the user to the documentation page."""
     return RedirectResponse("/docs")
+
+
+if __name__ == "__main__":
+    uvicorn.run("app.core.app:app", host="127.0.0.1", port=8000, reload=True)
