@@ -6,7 +6,7 @@ from pydantic import EmailStr
 from app.core.database import admin
 from app.core.models import UserSchema
 
-user_collection = admin.User
+user_collection = admin.Users
 
 
 async def fetch_user_by_email(email: str) -> dict[str, str] | None:
