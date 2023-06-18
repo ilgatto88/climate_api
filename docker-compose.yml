@@ -16,7 +16,7 @@ services:
         dockerfile: Dockerfile
       image: climate_api
       container_name: climate_api
-      command: uvicorn app.core.app:app --host 0.0.0.0 --port 8000 --reload
+      command: gunicorn app.core.app:app --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000
       restart: always
       depends_on: [mongo]
       env_file:
