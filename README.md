@@ -40,17 +40,19 @@ https://stackoverflow.com/questions/25903980/error-cannot-write-pid-file-to-var-
 `mongosh`: start MongoDB shell  
 `db`: display current database  
 `use <database>`: switch databases  
-`show dbs`: list available databases
-`use <database>`: create a new database
-`db.dropDatabase()`: delete current database
-`db.createCollection("<collection>")`: create a new collection
-`show collections`: list all collections
-`db.<collection>.drop()`: delete a collection
-`db.<collection>.insertOne({key1: "Value1", key2: "Value2", key3: 3, key4: ["Value4", "Value5"], date: Date()})`: insert one new document into collection
-`db.<collection>.insertMany([{key1: "Value1", key2: "Value2", key3: 3, key4: ["Value4", "Value5"], date: Date()}, {key1: "Value1", key2: "Value2", key3: 3, key4: ["Value4", "Value5"], date: Date()}])`: insert multiple new documents into collection
-`db.municipalityData.find( { key: value } )`: select data from collection
-`db.<collection>.findOne()`: select only one document from collection
-`db.<collection>.updateOne( { key1: "Post Title 1" }, { $set: { key3: 2 } } ) `: update a document
+`show dbs`: list available databases  
+`use <database>`: create a new database  
+`db.dropDatabase()`: delete current database  
+`db.createCollection("<collection>")`: create a new collection  
+`show collections`: list all collections  
+`db.<collection>.drop()`: delete a collection  
+`db.<collection>.insertOne({key1: "Value1", key2: "Value2", key3: 3, key4: ["Value4", "Value5"], date: Date()})`: insert one new document into collection  
+`db.<collection>.insertMany([{key1: "Value1", key2: "Value2", key3: 3, key4: ["Value4", "Value5"], date: Date()}, {key1: "Value1", key2: "Value2", key3: 3, key4: ["Value4", "Value5"], date: Date()}])`: insert multiple new documents into collection  
+`db.municipalityData.find( { key: value } )`: select data from collection  
+`db.<collection>.findOne()`: select only one document from collection  
+`db.<collection>.updateOne( { key1: "Post Title 1" }, { $set: { key3: 2 } } ) `: update a document  
+`db.<collection>.deleteOne( { key: value } )`: delete one document from a collection  
+`db.<collection>.deleteMany({})`: delete all documents in a collection  
 
 
 ### Comparison
@@ -78,3 +80,6 @@ The following operators assist in evaluating documents.
 `$regex`: Allows the use of regular expressions when evaluating field values
 `$text`: Performs a text search
 `$where`: Uses a JavaScript expression to match documents
+
+# Starting the application
+`docker-compose build --no-cache && docker-compose up -d`: build the images and start the containers
