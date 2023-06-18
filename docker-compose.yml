@@ -2,21 +2,26 @@ version: '3.9'
 services:
   mongo:
     image: mongo:6.0.6
+    container_name: api_database
     restart: always
     env_file:
       - .env
     volumes:
-      - ./data/mongo:/data/db
       - ./data/mongo-init:/docker-entrypoint-initdb.d
     ports:
       - "27017:27017"
   climate_api:
       build:
-        context: ./
-        dockerfile: app.Dockerfile
-      volumes:
-        - './app:/app'
-      ports:
-        - 8000:8000
+        context: ./app
+        dockerfile: Dockerfile
+      image: climate_api
+      container_name: climate_api
+      command: uvicorn app.core.app:app --host 0.0.0.0 --port 8000 --reload
+      restart: always
+      depends_on: [mongo]
       env_file:
         - .env
+      environment:
+        MONGODB_HOST: mongo
+      ports:
+        - "8000:8000"
