@@ -2,6 +2,7 @@ bcrypt
 email-validator
 fastapi[all]==0.97.0
 gunicorn
+loguru
 motor
 PyJWT
 pydantic
