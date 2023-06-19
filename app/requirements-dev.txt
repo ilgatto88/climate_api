@@ -1,6 +1,5 @@
 bcrypt
 black
-coverage
 email-validator
 fastapi[all]==0.97.0
 gunicorn
@@ -12,6 +11,7 @@ pydantic
 pydantic[email]
 pylint
 pytest
+pytest-cov
 python-decouple
 requests
 ruff
