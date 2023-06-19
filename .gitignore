@@ -164,3 +164,4 @@ cython_debug/
 api_data/
 env_climate_api/
 data/mongo/
+junit/
