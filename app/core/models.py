@@ -94,4 +94,3 @@ class MunicipalityData(BaseModel):
     meta: MunicipalityDataMeta
     historical: MunicipalityDataHistorical
     ensemble: MunicipalityDataEnsemble
-    ensemble: MunicipalityDataEnsemble
