@@ -2,8 +2,7 @@ import pytest
 from httpx import AsyncClient
 
 from app.core.main import app
-
-# from app.municipality_data import municipality_data_db
+from app.municipality_data import municipality_data_db
 
 BASE_URL = "http://127.0.0.1:8000"
 ENDPOINT = "/api/v1/MunicipalityData"
@@ -41,3 +40,9 @@ async def test_get_data_of_one_municipalities(client: AsyncClient):
     assert type(response_json) == dict
     assert all(key in response_json for key in main_keys)
     assert all(key in response_json["meta"] for key in meta_keys)
+
+
+@pytest.mark.anyio
+async def test_fetch_existing_municipality_data():
+    municipality_data = await municipality_data_db.fetch_municipality_data_by_id(10101)
+    assert municipality_data is not None
