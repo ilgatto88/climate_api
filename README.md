@@ -94,3 +94,11 @@ The following operators assist in evaluating documents.
 # Starting the application
 
 `docker-compose build --no-cache && docker-compose up -d`: build the images and start the containers
+
+# Further tutorials to read
+
+https://github.com/zhanymkanov/fastapi-best-practices#1-project-structure-consistent--predictable
+https://github.com/vinissimus/async-asgi-testclient
+https://github.com/petrgazarov/FastAPI-app
+https://pytest-with-eric.com/pytest-advanced/pytest-fastapi-testing/
+https://fastapi.tiangolo.com/tutorial/testing/
