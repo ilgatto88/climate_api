@@ -1,10 +1,13 @@
 # climATe API
+
 Climate API for Austria
 
 # Plan
+
 https://orf.at/stories/3316936/
 
 # Setup
+
 Upgrade pip with `python3 -m pip install --upgrade pip`  
 Install virtualenv `python3 -m pip install --user virtualenv`
 Install virtualenv step2 `sudo apt install python3.10-venv`
@@ -12,6 +15,7 @@ Install Python modules with `pip install -r requirements.txt`
 Add this to your bashrc `export PYTHONPATH="/home/jtordai/projects/climate_api/:$PYTHONPATH"`
 
 ## MongoDB installation
+
 https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/
 `sudo apt-get install gnupg`
 `curl -fsSL https://pgp.mongodb.com/server-6.0.asc | sudo gpg -o /usr/share/keyrings/mongodb-server-6.0.gpg --dearmor`
@@ -21,22 +25,26 @@ https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/
 `sudo chown mongodb:mongodb /var/run/mongod.pid`
 
 ## MongoDB startup
+
 https://askubuntu.com/questions/1203689/cannot-start-mongodb-on-wsl
 https://stackoverflow.com/questions/25903980/error-cannot-write-pid-file-to-var-run-mongodb-mongod-pid-no-such-file-or-dir
 
 ## MongoDB useful commands
+
 `sudo service mongod start` start mongodb
 `sudo service mongod status` check mongodb status
 
 `sudo cat /var/log/mongodb/mongod.log` check logs if database won't start up
 
 ## Install mongosh (MongoDB shell)
+
 `cd ~`
 `wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -`
 `sudo apt-get update`
 `sudo apt-get install -y mongodb-mongosh`
 
 ## MongoDB shell useful commands
+
 `mongosh`: start MongoDB shell  
 `db`: display current database  
 `use <database>`: switch databases  
@@ -52,11 +60,11 @@ https://stackoverflow.com/questions/25903980/error-cannot-write-pid-file-to-var-
 `db.<collection>.findOne()`: select only one document from collection  
 `db.<collection>.updateOne( { key1: "Post Title 1" }, { $set: { key3: 2 } } ) `: update a document  
 `db.<collection>.deleteOne( { key: value } )`: delete one document from a collection  
-`db.<collection>.deleteMany({})`: delete all documents in a collection  
-
+`db.<collection>.deleteMany({})`: delete all documents in a collection
 
 ### Comparison
-The following operators can be used in queries to compare values:  
+
+The following operators can be used in queries to compare values:
 
 `$eq`: Values are equal
 `$ne`: Values are not equal
@@ -67,6 +75,7 @@ The following operators can be used in queries to compare values:
 `$in`: Value is matched within an array
 
 ### Logical
+
 The following operators can logically compare multiple queries.
 
 `$and`: Returns documents where both queries match
@@ -75,6 +84,7 @@ The following operators can logically compare multiple queries.
 `$not`: Returns documents where the query does not match
 
 ### Evaluation
+
 The following operators assist in evaluating documents.
 
 `$regex`: Allows the use of regular expressions when evaluating field values
@@ -82,4 +92,5 @@ The following operators assist in evaluating documents.
 `$where`: Uses a JavaScript expression to match documents
 
 # Starting the application
+
 `docker-compose build --no-cache && docker-compose up -d`: build the images and start the containers
