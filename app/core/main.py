@@ -1,32 +1,48 @@
+import logging
+from pathlib import Path
+
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 
 from app.auth import auth_router
+from app.logging.custom_logging import CustomizeLogger
 from app.municipality import municipality_router
 from app.municipality_data import municipality_data_router
 
-v1_prefix = "/api/v1"
-BASE_API_URI = "http://127.0.0.1:8000"
+logger = logging.getLogger(__name__)
+logconfig_path = Path(__file__).parents[1] / "logging" / "logging_config.json"
 
+V1_PREFIX = "/api/v1"
+BASE_API_URI = "http://127.0.0.1:8000"
 API_NAME = "climATe API"
 API_VERSION = "0.2.0"
 
-app = FastAPI(
-    title=API_NAME,
-    description="Climate data API",
-    version=API_VERSION,
-)
+
+def create_app() -> FastAPI:
+    app = FastAPI(
+        title=API_NAME,
+        description="Climate data API",
+        version=API_VERSION,
+        debug=False,
+    )
+    logger = CustomizeLogger.make_logger(logconfig_path)
+    app.logger = logger  # type: ignore
+
+    return app
+
+
+app = create_app()
 
 app.include_router(
     municipality_data_router.router,
-    prefix=f"{v1_prefix}/MunicipalityData",
+    prefix=f"{V1_PREFIX}/MunicipalityData",
     tags=["MunicipalityData"],
 )
 app.include_router(
     municipality_router.router,
-    prefix=f"{v1_prefix}/Municipalities",
+    prefix=f"{V1_PREFIX}/Municipalities",
     tags=["Municipalities"],
 )
 app.include_router(
@@ -50,4 +66,4 @@ async def index():
 
 
 if __name__ == "__main__":
-    uvicorn.run("app.core.main:app", host="127.0.0.1", port=8000, reload=True)
+    uvicorn.run(app, host="127.0.0.1", port=8000, reload=True, access_log=True)
