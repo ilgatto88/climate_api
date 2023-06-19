@@ -1,14 +1,17 @@
 bcrypt
 black
+coverage
 email-validator
 fastapi[all]==0.97.0
 gunicorn
+httpx
 loguru
 motor
 PyJWT
 pydantic
 pydantic[email]
 pylint
+pytest
 python-decouple
 requests
 ruff
