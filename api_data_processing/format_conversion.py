@@ -2,7 +2,10 @@ import xarray as xr
 
 
 def convert_dataset_to_geotiff(dataset: xr.Dataset, output_path: str) -> None:
-    """Converts an xarray Dataset to GeoTIFF format and saves it to the specified output path."""
+    """
+    Converts an xarray Dataset to GeoTIFF format and saves it to
+    the specified output path.
+    """
     dataset.rio.to_raster(output_path)
 
 

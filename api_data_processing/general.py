@@ -18,7 +18,8 @@ def calculate_along_dimension(
     **kwargs,
 ) -> xr.DataArray:
     """
-    Calculates the aggregation along the specified dimension using the provided function.
+    Calculates the aggregation along the specified dimension using the
+    provided function.
 
     Examples for the func parameter:
     - xr.Dataarray.mean
