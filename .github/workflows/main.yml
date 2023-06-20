@@ -36,7 +36,10 @@ jobs:
           path: junit/test-results-${{ matrix.python-version }}.xml
         if: ${{ always() }}
   release:
+    name: 'Release to GitHub'
     runs-on: ubuntu-latest
+    needs:
+      - build
     steps:
     - name: Checkout repo
       uses: actions/checkout@v2
