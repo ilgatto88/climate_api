@@ -66,15 +66,48 @@ jobs:
         GIT_COMMITTER_NAME: Janos Tordai
         GIT_COMMITTER_EMAIL: tjanos88@gmail.com
       run: npx semantic-release
-  patch:
+  patch-major:
+    if: contains(github.event.head_commit.message, '!major')
+    needs: release
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
       with:
         fetch-depth: '0'
-    - name: Minor version for each merge
+    - name: Bump major
       id: AutoTagger
       uses: anothrNick/github-tag-action@1.36.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         WITH_V: true
+        DEFAULT_BUMP: major
+  patch-minor:
+    if: contains(github.event.head_commit.message, '!minor')
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: '0'
+    - name: Bump minor
+      id: AutoTagger
+      uses: anothrNick/github-tag-action@1.36.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        WITH_V: true
+        DEFAULT_BUMP: minor
+  patch-patch:
+    if: contains(github.event.head_commit.message, '!patch')
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: '0'
+    - name: Bump patch
+      id: AutoTagger
+      uses: anothrNick/github-tag-action@1.36.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        WITH_V: true
+        DEFAULT_BUMP: patch
