@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   build:
-    runs-on: python::latest
+    runs-on: python:latest
     strategy:
       matrix:
         python-version: [3.10]
