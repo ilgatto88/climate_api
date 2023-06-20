@@ -3,3 +3,8 @@
 [![climATe API](https://github.com/ilgatto88/climate_api/actions/workflows/main.yml/badge.svg)](https://github.com/ilgatto88/climate_api/actions/workflows/main.yml)
 
 ## API Documentation
+
+The climATe API has two documentation types:
+
+- Swagger UI
+- Redoc
