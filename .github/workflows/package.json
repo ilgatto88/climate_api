@@ -1,12 +1,5 @@
 {
     "name": "climate_api",
-    "release": {
-        "verifyConditions": ["@semantic-release/github"],
-        "publish": [{
-            "path": "@semantic-release/npm",
-            "npmPublish": false
-          }, 
-          "@semantic-release/github"
-        ]
-      }
+    "private": true
+  
 }
