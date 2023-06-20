@@ -1,3 +1,14 @@
 {
-    "name": "climate_api"
+    "name": "climate_api",
+    "release": {
+        "verifyConditions": ["@semantic-release/git", "@semantic-release/github"],
+        "getLastRelease": "@semantic-release/git",
+        "publish": [{
+            "path": "@semantic-release/npm",
+            "npmPublish": false
+          }, 
+          "@semantic-release/git", 
+          "@semantic-release/github"
+        ]
+      }
 }
