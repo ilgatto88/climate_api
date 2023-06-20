@@ -20,7 +20,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install ruff pytest pytest-cov
           if [ -f app/requirements-dev.txt ]; then pip install -r app/requirements-dev.txt; fi
-          if [ -f api_data_processing/requirements-dataprocessing.txt ]; then pip install -r api_data_processing/requirements-dataprocessing.txt; fi
       - name: Lint with ruff
         run: |
           # stop the build if there are Python syntax errors or undefined names
