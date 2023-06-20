@@ -1,6 +1,8 @@
 # climATe API: Climate Data API for Austria
 
-[![climATe API](https://github.com/ilgatto88/climate_api/actions/workflows/main.yml/badge.svg)](https://github.com/ilgatto88/climate_api/actions/workflows/main.yml)
+[![CI](https://github.com/ilgatto88/climate_api/actions/workflows/main.yml/badge.svg)](https://github.com/ilgatto88/climate_api/actions/workflows/main.yml) [![Github tag](https://badgen.net/github/tag/Naereen/Strapdown.js)](https://github.com/ilgatto88/climate_api/tags/) [![GitHub issues](https://img.shields.io/github/issues/Naereen/StrapDown.js.svg)](https://github.com/ilgatto88/climate_api/issues/)
+
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/charliermarsh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
 ## API Documentation
 
