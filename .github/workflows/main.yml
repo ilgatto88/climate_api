@@ -45,6 +45,7 @@ jobs:
         if: ${{ always() }}
   release:
     name: 'Release to GitHub'
+    needs: test
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repo
