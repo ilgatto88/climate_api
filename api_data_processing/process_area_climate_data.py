@@ -8,15 +8,6 @@ from api_data_processing import (
     loaders,
 )
 
-# to execute this script, use ./manage.py shell < preprocessing/process_oeks_data.py
-
-# user config
-TS_START = "1991-01-01"
-TS_END = "2020-01-01"
-input_file = f"{config.BASE_DATA_PATH}netcdf/oeks-rcp26-tm-austria-YS.nc"
-shapefile_path = config.MUNICIPALITY_SHAPEFILE
-geodf = geodataframe_tools.load_shapefile(shapefile_path)
-
 
 def oeks_to_geotiff_modelwise_and_aggr(source: str) -> None:
     """Creates 1991-2020 mean temperature for AT for each model from RCP2.6 (geotiff)"""
@@ -51,3 +42,13 @@ def oeks_to_geotiff_modelwise_and_aggr(source: str) -> None:
     format_conversion.convert_dataset_to_geotiff(
         dataarray_aggr_models.to_dataset(name="tm"), outname
     )
+
+
+if __name__ == "__main__":
+    # to execute this script, use ./manage.py shell < preprocessing/process_oeks_data.py
+    # user config
+    TS_START = "1991-01-01"
+    TS_END = "2020-01-01"
+    input_file = f"{config.BASE_DATA_PATH}netcdf/oeks-rcp26-tm-austria-YS.nc"
+    shapefile_path = config.MUNICIPALITY_SHAPEFILE
+    geodf = geodataframe_tools.load_shapefile(shapefile_path)
