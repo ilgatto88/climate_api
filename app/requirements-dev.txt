@@ -12,6 +12,7 @@ pydantic[email]
 pylint
 pytest
 pytest-cov
+pytest-mock
 python-decouple
 requests
 ruff
