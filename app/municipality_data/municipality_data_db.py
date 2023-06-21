@@ -4,7 +4,7 @@ from app.core.models import MunicipalityData
 municipality_data_collection = climate_data.MunicipalityData
 
 
-async def fetch_municipality_data_by_id(m_id: int):
+async def fetch_municipality_data_by_id(m_id: int) -> MunicipalityData | None:
     """
     Retrieves a municipality data document from the collection based on the given ID.
     """
