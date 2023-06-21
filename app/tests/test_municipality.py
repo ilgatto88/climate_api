@@ -2,7 +2,7 @@ import pytest
 from httpx import AsyncClient
 from pytest_mock import MockFixture
 
-# from app.municipality import municipality_db
+from app.municipality import municipality_db
 
 ENDPOINT = "/api/v1/Municipalities"
 
@@ -52,14 +52,8 @@ async def test_get_not_existing_municipality(
 
 @pytest.mark.anyio
 async def test_fetch_all_municipalities(mocker: MockFixture):
-    municipalities = mocker.patch(
-        "app.municipality.municipality_db.fetch_all_municipalities",
-        return_value=[
-            {"m_id": 1, "name": "City 1", "state": "State1"},
-            {"m_id": 2, "name": "City 2", "state": "State2"},
-        ],
-    )
-    assert len(municipalities.return_value) == 2
+    municipalities = await municipality_db.fetch_all_municipalities()
+    assert len(municipalities) == 2116
 
 
 @pytest.mark.anyio
