@@ -44,18 +44,6 @@ jobs:
           name: pytest-results-${{ matrix.python-version }}
           path: junit/test-results-${{ matrix.python-version }}.xml
         if: ${{ always() }}
-        
-      - name: Generate JaCoCo Badge
-        uses: cicirello/jacoco-badge-generator@v2
-        with:
-          jacoco-csv-file: build/reports/jacoco/test/jacocoTestReport.csv
-          badges-directory: build/reports/jacoco/test/html/badges
-      
-      - name: Publish coverage report to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: build/reports/jacoco/test/html
-  
   release:
     name: 'Release to GitHub'
     needs: test
