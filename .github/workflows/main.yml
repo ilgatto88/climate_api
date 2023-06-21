@@ -44,21 +44,6 @@ jobs:
           name: code-coverage-report
           path: htmlcov
         if: ${{ always() }}
-      - name: Publish code coverage badge
-        run: |
-          set -x
-          total=$(sed -n 's/.*<td class="right"[^>]*>\([^<]*\)<\/td>.*/\1/p' htmlcov/index.html | tail -n 1 | sed 's/%$//')
-          if (( $(echo "$total <= 50" | bc -l) )) ; then
-            COLOR=red
-          elif (( $(echo "$total > 80" | bc -l) )); then
-            COLOR=green
-          else
-            COLOR=orange
-          fi
-
-          curl "https://img.shields.io/badge/coavrege-$total%25-$COLOR" > badge.svg
-          aws s3 cp badge.svg s3://ilgatto88/github_badge/codcov.svg --cache-control "no-cache"
-          aws s3api put-object-acl --bucket ilgatto88 --key github_badge/codcov.svg --acl public-read
 
   release:
     name: 'Release to GitHub'
