@@ -47,7 +47,7 @@ jobs:
       - name: Publish code coverage badge
         run: |
           set -x
-          total=$(sed -n 's/.*<td class="right"[^>]*>\([^<]*\)<\/td>.*/\1/p' htmlcov/index.html | tail -n 1)
+          total=$(sed -n 's/.*<td class="right"[^>]*>\([^<]*\)<\/td>.*/\1/p' htmlcov/index.html | tail -n 1 | sed 's/%$//')
           if (( $(echo "$total <= 50" | bc -l) )) ; then
             COLOR=red
           elif (( $(echo "$total > 80" | bc -l) )); then
@@ -57,8 +57,8 @@ jobs:
           fi
 
           curl "https://img.shields.io/badge/coavrege-$total%25-$COLOR" > badge.svg
-          gsutil  -h "Cache-Control: no-cache" cp badge.svg gs://ilgatto88/github_badge/codcov.svg
-          gsutil acl ch -u AllUsers:R gs://ilgatto88/github_badge/codcov.svg
+          gsutil  -h "Cache-Control: no-cache" cp badge.svg s3://ilgatto88/github_badge/codcov.svg
+          gsutil acl ch -u AllUsers:R s3://ilgatto88/github_badge/codcov.svg
 
   release:
     name: 'Release to GitHub'
