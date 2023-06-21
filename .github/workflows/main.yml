@@ -57,8 +57,8 @@ jobs:
           fi
 
           curl "https://img.shields.io/badge/coavrege-$total%25-$COLOR" > badge.svg
-          gsutil  -h "Cache-Control: no-cache" cp badge.svg gs://ilgatto88/github_badge/codcov.svg
-          gsutil acl ch -u AllUsers:R gs://ilgatto88/github_badge/codcov.svg
+          aws s3 cp badge.svg s3://ilgatto88/github_badge/codcov.svg --cache-control "no-cache"
+          aws s3api put-object-acl --bucket ilgatto88 --key github_badge/codcov.svg --acl public-read
 
   release:
     name: 'Release to GitHub'
