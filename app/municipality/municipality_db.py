@@ -84,4 +84,3 @@ if __name__ == "__main__":
         # loop.run_until_complete(remove_municipality(99999))
     except KeyboardInterrupt:
         pass
-        pass
