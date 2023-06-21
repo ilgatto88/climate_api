@@ -37,8 +37,7 @@ jobs:
         continue-on-error: true
       - name: Test with pytest
         run: |
-          pytest
-          coverage html
+          pytest --cov --cov-report=html
       - name: Upload code coverage html report
         uses: actions/upload-artifact@v3
         with:
