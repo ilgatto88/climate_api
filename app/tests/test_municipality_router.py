@@ -47,3 +47,129 @@ async def test_get_municipality_by_id_which_doesnt_exist(
     assert response.json() == {
         "detail": "There is no municipality in the database with m_id=0"
     }
+
+
+@pytest.fixture
+def mock_jwt_bearer(mocker: MockFixture):
+    mocker.patch(
+        "app.municipality.municipality_router.JWTBearer.__call__", return_value=None
+    )
+
+
+@pytest.mark.anyio(scope="session")
+async def test_post_municipality(
+    client: AsyncClient, mocker: MockFixture, mock_jwt_bearer: None
+) -> None:
+    ID = 99999
+    NAME = "Test City 1"
+    STATE = "Test State 1"
+    mocker.patch(
+        "app.municipality.municipality_db.fetch_municipality_by_id",
+        return_value=None,
+    )
+    mocker.patch(
+        "app.municipality.municipality_db.create_municipality",
+        return_value={"m_id": ID, "name": NAME, "state": STATE},
+    )
+    response = await client.post(
+        ENDPOINT,
+        json={"m_id": ID, "name": NAME, "state": STATE},
+    )
+    assert response.status_code == 201
+    assert response.json() == {
+        "m_id": ID,
+        "name": NAME,
+        "state": STATE,
+    }
+
+
+@pytest.mark.anyio
+async def test_post_municipality_which_already_exists(
+    client: AsyncClient, mocker: MockFixture, mock_jwt_bearer: None
+) -> None:
+    ID = 99999
+    NAME = "Test City 1"
+    STATE = "Test State 1"
+    mocker.patch(
+        "app.municipality.municipality_db.fetch_municipality_by_id",
+        return_value={"m_id": ID, "name": NAME, "state": STATE},
+    )
+    response = await client.post(
+        ENDPOINT,
+        json={"m_id": ID, "name": NAME, "state": STATE},
+    )
+    assert response.status_code == 400
+    assert response.json() == {"detail": f"Municipality with m_id={ID} already exists."}
+
+
+@pytest.mark.anyio
+async def test_update_one_municipality(
+    client: AsyncClient, mocker: MockFixture, mock_jwt_bearer: None
+) -> None:
+    ID = 99999
+    NAME = "Test City 2"
+    STATE = "Test State 2"
+
+    mocker.patch(
+        "app.municipality.municipality_db.update_municipality",
+        return_value={"m_id": ID, "name": NAME, "state": STATE},
+    )
+    response = await client.put(
+        f"{ENDPOINT}/{ID}",
+        params={
+            "m_id": ID,
+            "name": NAME,
+            "state": STATE,
+        },
+    )
+    assert response.status_code == 201
+    assert response.json() == {
+        "m_id": ID,
+        "name": NAME,
+        "state": STATE,
+    }
+
+
+@pytest.mark.anyio
+async def test_update_one_municipality_which_doesnt_exist(
+    client: AsyncClient, mocker: MockFixture, mock_jwt_bearer: None
+) -> None:
+    ID = 99999
+    NAME = "Test City 2"
+    STATE = "Test State 2"
+
+    mocker.patch(
+        "app.municipality.municipality_db.update_municipality",
+        return_value=None,
+    )
+    response = await client.put(
+        f"{ENDPOINT}/{ID}",
+        params={
+            "m_id": ID,
+            "name": NAME,
+            "state": STATE,
+        },
+    )
+    assert response.status_code == 404
+    assert response.json() == {
+        "detail": f"There is no municipality in the database with m_id={ID}"
+    }
+
+
+@pytest.mark.anyio
+async def test_delete_one_municipality(
+    client: AsyncClient, mocker: MockFixture, mock_jwt_bearer: None
+) -> None:
+    ID = 99999
+    NAME = "Test City 1"
+    STATE = "Test State 1"
+
+    mocker.patch(
+        "app.municipality.municipality_db.remove_municipality",
+        return_value={"m_id": ID, "name": NAME, "state": STATE},
+    )
+    response = await client.delete(
+        f"{ENDPOINT}/{ID}",
+    )
+    assert response.status_code == 200
+    assert response.json() == f"Successfully deleted municipality with m_id={ID}"

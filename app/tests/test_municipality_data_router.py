@@ -49,3 +49,45 @@ async def test_get_municipality_data_by_id_which_doesnt_exist(
     assert response.json() == {
         "detail": "There is no municipality data in the database with m_id=0"
     }
+
+
+@pytest.fixture
+def mock_jwt_bearer(mocker: MockFixture):
+    mocker.patch(
+        "app.municipality_data.municipality_data_router.JWTBearer.__call__",
+        return_value=None,
+    )
+
+
+@pytest.mark.anyio(scope="session")
+async def test_post_municipality_data(
+    client: AsyncClient, mocker: MockFixture, mock_jwt_bearer: None
+):
+    sample_file_path = f"{TEST_DATA_PATH}/sample_municipality_data.json"
+    main_keys = ("meta", "historical", "ensemble")
+    meta_keys = (
+        "municipalityId",
+        "climateParameter",
+        "temporalResolution",
+        "analysisTimeRange",
+        "ensembleTimeRange",
+    )
+
+    mocker.patch(
+        "app.municipality_data.municipality_data_db.fetch_municipality_data_by_id",
+        return_value=None,
+    )
+
+    with open(sample_file_path) as json_file:
+        sample_data = json.load(json_file)
+    mocker.patch(
+        "app.municipality_data.municipality_data_db.create_municipality_data",
+        return_value=sample_data,
+        status_code=201,
+    )
+
+    response = await client.post(ENDPOINT, json=sample_data)
+    assert response.status_code == 201
+    assert type(response.json()) == dict
+    assert all(key in response.json() for key in main_keys)
+    assert all(key in response.json()["meta"] for key in meta_keys)
