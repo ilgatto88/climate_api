@@ -1,7 +1,10 @@
+import json
+
 import pytest
 
 from app.core.models import Municipality
 from app.municipality import municipality_db
+from app.tests.conftest import TEST_DATA_PATH
 
 
 @pytest.mark.anyio
@@ -59,3 +62,13 @@ async def test_delete_all_municipalities():
     await municipality_db.remove_all_municipalities()
     municipalities = await municipality_db.fetch_all_municipalities()
     assert len(municipalities) == 0
+
+
+@pytest.mark.anyio(scope="module")
+async def test_create_many_municipalities():
+    sample_file_path = f"{TEST_DATA_PATH}/sample_municipalities.json"
+    with open(sample_file_path) as json_file:
+        sample_data = json.load(json_file)
+    municipalities = await municipality_db.create_many_municipalities(sample_data)
+    assert len(municipalities) > 2000
+    assert len(municipalities) > 2000

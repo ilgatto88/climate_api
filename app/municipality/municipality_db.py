@@ -36,6 +36,17 @@ async def create_municipality(municipality: Municipality) -> Municipality:
     return municipality
 
 
+async def create_many_municipalities(
+    municipalities: list[dict[str, str]],
+) -> list[dict[str, str]]:
+    """
+    Inserts multiple municipality documents into the collection
+    and returns a list of municipalities.
+    """
+    await municipality_collection.insert_many(municipalities)
+    return municipalities
+
+
 async def update_municipality(
     m_id: int,
     name: str,
