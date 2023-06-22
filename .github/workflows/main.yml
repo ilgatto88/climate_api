@@ -48,11 +48,6 @@ jobs:
         with:
           name: code-coverage-report
           path: htmlcov
-      - name: Upload code coverage badge
-        uses: actions/upload-artifact@v3
-        with:
-          name: coverage_badge
-          path: htmlcov/coverage.svg
 
   release:
     name: 'Release to GitHub'
