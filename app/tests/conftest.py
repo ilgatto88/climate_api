@@ -5,6 +5,8 @@ from app.core.main import app
 
 BASE_URL = "http://127.0.0.1:8000"
 
+TEST_DATA_PATH = "app/tests/data"
+
 
 @pytest.fixture(scope="session")
 def anyio_backend():
