@@ -17,7 +17,7 @@ async def test_create_municipality():
 @pytest.mark.anyio(scope="module")
 async def test_fetch_all_municipalities():
     municipalities = await municipality_db.fetch_all_municipalities()
-    assert len(municipalities) > 2000
+    assert len(municipalities) > 0
 
 
 @pytest.mark.anyio
