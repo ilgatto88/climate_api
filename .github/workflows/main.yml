@@ -42,7 +42,6 @@ jobs:
       - name: Test with pytest
         run: |
           pytest --cov-config=.coveragerc --cov-report term --cov-report html:htmlcov --cov=app app/tests
-          coverage-badge -o htmlcov/coverage.svg
       - name: Upload code coverage html report
         uses: actions/upload-artifact@v3
         with:
