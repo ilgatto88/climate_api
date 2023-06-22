@@ -1,3 +1,5 @@
+from typing import Any
+
 from fastapi import APIRouter, Depends, HTTPException
 
 from app.auth.auth_bearer import JWTBearer
@@ -8,7 +10,7 @@ router = APIRouter()
 
 
 @router.get("/{m_id}", response_model=MunicipalityData)
-async def get_municipality_data_by_id(m_id: int) -> MunicipalityData:
+async def get_municipality_data_by_id(m_id: int) -> dict[str, Any]:
     """
     Retrieves the climate data for municipality from the database
     based on the given ID.
@@ -28,14 +30,18 @@ async def get_municipality_data_by_id(m_id: int) -> MunicipalityData:
     status_code=201,
     dependencies=[Depends(JWTBearer())],
 )
-async def post_municipality(municipality_data: MunicipalityData) -> MunicipalityData:
+async def post_municipality_data(
+    municipality_data: MunicipalityData,
+) -> MunicipalityData:
     """
-    Creates a new municipality in the database with the provided data
-    and returns the created municipality.
+    Creates a new municipality data in the database with the provided data
+    and returns the created municipality data.
     """
     m_id = municipality_data.meta.municipalityId
-    municipality_exists = await municipality_data_db.fetch_municipality_data_by_id(m_id)
-    if municipality_exists:
+    municipality_data_exists = await municipality_data_db.fetch_municipality_data_by_id(
+        m_id
+    )
+    if municipality_data_exists:
         raise HTTPException(
             status_code=400,
             detail=f"Municipality data with {m_id=} already exists.",

@@ -35,9 +35,7 @@ async def get_municipality_by_id(m_id: int) -> dict[str, str]:
     status_code=201,
     dependencies=[Depends(JWTBearer())],
 )
-async def post_municipality(
-    municipality: Municipality,
-) -> Municipality:
+async def post_municipality(municipality: Municipality) -> Municipality:
     """
     Creates a new municipality in the database with the provided data
     and returns the created municipality.

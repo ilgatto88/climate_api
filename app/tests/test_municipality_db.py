@@ -71,4 +71,3 @@ async def test_create_many_municipalities():
         sample_data = json.load(json_file)
     municipalities = await municipality_db.create_many_municipalities(sample_data)
     assert len(municipalities) > 2000
-    assert len(municipalities) > 2000
