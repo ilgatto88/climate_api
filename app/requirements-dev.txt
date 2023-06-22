@@ -1,5 +1,6 @@
 bcrypt
 black
+coverage-badge
 email-validator
 fastapi[all]==0.97.0
 gunicorn
