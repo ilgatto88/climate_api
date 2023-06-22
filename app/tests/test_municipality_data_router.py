@@ -4,12 +4,14 @@ import pytest
 from httpx import AsyncClient
 from pytest_mock import MockFixture
 
+from app.tests.conftest import TEST_DATA_PATH
+
 ENDPOINT = "/api/v1/MunicipalityData"
 
 
 @pytest.mark.anyio
 async def test_get_municipality_data_by_id(client: AsyncClient, mocker: MockFixture):
-    sample_file_path = "app/tests/data/sample_municipality_data.json"
+    sample_file_path = f"{TEST_DATA_PATH}/sample_municipality_data.json"
     main_keys = ("meta", "historical", "ensemble")
     meta_keys = (
         "municipalityId",
