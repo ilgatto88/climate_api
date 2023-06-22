@@ -1,7 +1,12 @@
-# @pytest.mark.anyio
-# async def test_fetch_all_municipalities():
-#     municipalities = await municipality_db.fetch_all_municipalities()
-#     assert len(municipalities) == 2116
+import pytest
+
+from app.municipality import municipality_db
+
+
+@pytest.mark.anyio
+async def test_fetch_all_municipalities():
+    municipalities = await municipality_db.fetch_all_municipalities()
+    assert len(municipalities) > 2000
 
 
 # @pytest.mark.anyio
@@ -10,4 +15,5 @@
 #     assert municipality is not None
 #     assert municipality["m_id"] == 10101
 #     assert municipality["name"] == "Eisenstadt"
+#     assert municipality["state"] == "Burgenland"
 #     assert municipality["state"] == "Burgenland"
