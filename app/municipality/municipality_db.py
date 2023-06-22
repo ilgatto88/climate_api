@@ -1,5 +1,3 @@
-import asyncio
-
 from app.core.database import geo
 from app.core.models import Municipality
 
@@ -86,12 +84,3 @@ async def remove_all_municipalities() -> None:
     """Removes all municipalities from the database"""
     x = await municipality_collection.delete_many({})
     print(f"Removed all ({x.deleted_count}) municipalities from the database.")
-
-
-if __name__ == "__main__":
-    loop = asyncio.new_event_loop()
-    try:
-        loop.run_until_complete(remove_all_municipalities())
-        # loop.run_until_complete(remove_municipality(99999))
-    except KeyboardInterrupt:
-        pass
