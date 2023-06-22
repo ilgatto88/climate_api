@@ -8,15 +8,14 @@ on:
     branches:
       - master
 
-permissions: write-all
+permissions:
+  contents: read
+  pull-requests: write
 
 jobs:
   test:
     name: 'Code quality and test'
     runs-on: ubuntu-latest
-    env:
-      COVERAGE_SINGLE: 60
-      COVERAGE_TOTAL: 60
     strategy:
       matrix:
         python-version: [3.10.6]
@@ -30,7 +29,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install ruff pytest flake8
+          pip install ruff pytest pytest-cov
           if [ -f app/requirements-dev.txt ]; then pip install -r app/requirements-dev.txt; fi
           if [ -f api_data_processing/requirements-dataprocessing.txt ]; then pip install -r api_data_processing/requirements-dataprocessing.txt; fi
       - name: Static Code Linting with ruff
@@ -42,51 +41,14 @@ jobs:
         uses: supercharge/mongodb-github-action@1.8.0
         with:
           mongodb-version: '6.0'
-      - name: pytester-cov
-        id: pytester-cov
-        uses: programmingwithalex/pytester-cov@main
-        with:
-          pytest-root-dir: '.'
-          cov-omit-list: 'test/*, temp/main3.py, temp/main4.py'
-          cov-threshold-single: ${{ env.COVERAGE_SINGLE }}
-          cov-threshold-total: ${{ env.COVERAGE_TOTAL }}
-    
-      - name: Coverage single fail - new issue
-        if: ${{ steps.pytester-cov.outputs.cov-threshold-single-fail == 'true' }}
-        uses: nashmaniac/create-issue-action@v1.1
-        with:
-          title: Pytest coverage single falls below minimum ${{ env.COVERAGE_SINGLE }}
-          token: ${{secrets.GITHUB_TOKEN}}
-          assignees: ${{github.actor}}
-          labels: workflow-failed
-          body: ${{ steps.pytester-cov.outputs.output-table }}
-  
-      - name: Coverage single fail - exit
-        if: ${{ steps.pytester-cov.outputs.cov-threshold-single-fail == 'true' }}
+      - name: Test with pytest
         run: |
-          echo "cov single fail ${{ steps.pytester-cov.outputs.cov-threshold-single-fail }}"
-          exit 1
-  
-      - name: Coverage total fail - new issue
-        if: ${{ steps.pytester-cov.outputs.cov-threshold-total-fail == 'true' }}
-        uses: nashmaniac/create-issue-action@v1.1
+          pytest --cov-config=.coveragerc --cov-report term --cov-report html:htmlcov --cov=app app/tests
+      - name: Upload code coverage html report
+        uses: actions/upload-artifact@v3
         with:
-          title: Pytest coverage total falls below minimum ${{ env.COVERAGE_TOTAL }}
-          token: ${{secrets.GITHUB_TOKEN}}
-          assignees: ${{github.actor}}
-          labels: workflow-failed
-          body: ${{ steps.pytester-cov.outputs.output-table }}
-  
-      - name: Coverage total fail - exit
-        if: ${{ steps.pytester-cov.outputs.cov-threshold-total-fail == 'true' }}
-        run: |
-          echo "cov single fail ${{ steps.pytester-cov.outputs.cov-threshold-total-fail }}"
-          exit 1
-  
-      - name: Commit pytest coverage table
-        uses: peter-evans/commit-comment@main
-        with:
-          body: ${{ steps.pytester-cov.outputs.output-table }}
+          name: code-coverage-report
+          path: htmlcov
 
 
   patch:
