@@ -6,8 +6,8 @@ from jwt.exceptions import DecodeError
 
 
 def get_jwt_variables() -> tuple[str, str]:
-    JWT_SECRET = config("JWT_SECRET")
-    JWT_ALGORITHM = config("JWT_ALGORITHM")
+    JWT_SECRET = config("JWT_SECRET", cast=str)
+    JWT_ALGORITHM = config("JWT_ALGORITHM", cast=str)
 
     if not isinstance(JWT_ALGORITHM, str) or not isinstance(JWT_SECRET, str):
         raise UndefinedValueError(
