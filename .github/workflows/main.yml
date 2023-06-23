@@ -1,4 +1,4 @@
-name: climATe API
+name: Code quality and tests
 
 on:
   push:
