@@ -1,7 +1,7 @@
 import bcrypt
 from fastapi import APIRouter, Body, HTTPException
 
-from src.auth import database as auth_database
+from src.auth import service as auth_service
 from src.auth.handler import signJWT
 from src.auth.models import UserLoginSchema, UserSchema
 
@@ -14,7 +14,7 @@ async def create_user(user: UserSchema = Body(...)) -> dict[str, str]:
     Creates a new user in the database with the provided data
     and returns the JWT token.
     """
-    user_exists = await auth_database.fetch_user_by_email(user.email)
+    user_exists = await auth_service.fetch_user_by_email(user.email)
 
     if user_exists:
         raise HTTPException(
@@ -22,7 +22,7 @@ async def create_user(user: UserSchema = Body(...)) -> dict[str, str]:
             detail=f"User with email '{user.email}' already exists.",
         )
 
-    response = await auth_database.create_user(user)
+    response = await auth_service.create_user(user)
     if response:
         return signJWT(user.email)
     raise HTTPException(status_code=400, detail="Bad Request")
@@ -41,7 +41,7 @@ async def user_login(user: UserLoginSchema = Body(...)) -> dict[str, str]:
 
 async def check_user(user: UserLoginSchema) -> bool:
     """Checks if the user already exists in the database."""
-    response_user: dict[str, str] | None = await auth_database.fetch_user_by_email(
+    response_user: dict[str, str] | None = await auth_service.fetch_user_by_email(
         user.email
     )
 

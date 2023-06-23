@@ -1,7 +1,7 @@
 import pytest
 from pydantic import EmailStr
 
-from src.auth import database as auth_database
+from src.auth import service as auth_service
 from src.auth.models import UserSchema
 
 
@@ -14,8 +14,8 @@ async def test_create_user():
     }
     user = UserSchema(**user_data)
 
-    await auth_database.create_user(user)
-    result = await auth_database.fetch_user_by_email(user.email)
+    await auth_service.create_user(user)
+    result = await auth_service.fetch_user_by_email(user.email)
     assert result is not None
     assert result["fullname"] == "testuser"
     assert result["email"] == "test@example.com"
@@ -29,7 +29,7 @@ async def test_fetch_fetch_user_by_email():
         "email": EmailStr("test@example.com"),
     }
     user = UserSchema(**user_data)
-    result = await auth_database.fetch_user_by_email(user.email)
+    result = await auth_service.fetch_user_by_email(user.email)
     assert result is not None
     assert result["fullname"] == "testuser"
     assert result["email"] == "test@example.com"
@@ -43,12 +43,12 @@ async def test_remove_user():
         "email": EmailStr("test@example.com"),
     }
     user = UserSchema(**user_data)
-    await auth_database.remove_user(user.email)
-    result = await auth_database.fetch_user_by_email(user.email)
+    await auth_service.remove_user(user.email)
+    result = await auth_service.fetch_user_by_email(user.email)
     assert result is None
 
 
 @pytest.mark.anyio
 async def test_remove_user_not_found():
-    result = await auth_database.remove_user("test@example.com")
+    result = await auth_service.remove_user("test@example.com")
     assert result is False

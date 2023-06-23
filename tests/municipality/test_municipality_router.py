@@ -8,7 +8,7 @@ ENDPOINT = "/api/v1/Municipalities"
 @pytest.mark.anyio
 async def test_get_municipalities(client: AsyncClient, mocker: MockFixture):
     mocker.patch(
-        "src.municipality.database.fetch_all_municipalities",
+        "src.municipality.service.fetch_all_municipalities",
         return_value=[
             {"m_id": 1, "name": "City 1", "state": "State1"},
             {"m_id": 2, "name": "City 2", "state": "State2"},
@@ -22,7 +22,7 @@ async def test_get_municipalities(client: AsyncClient, mocker: MockFixture):
 @pytest.mark.anyio
 async def test_get_municipality_by_id(client: AsyncClient, mocker: MockFixture) -> None:
     mocker.patch(
-        "src.municipality.database.fetch_municipality_by_id",
+        "src.municipality.service.fetch_municipality_by_id",
         return_value={"m_id": 10101, "name": "Eisenstadt", "state": "Burgenland"},
     )
     response = await client.get(f"{ENDPOINT}/10101")
@@ -39,7 +39,7 @@ async def test_get_municipality_by_id_which_doesnt_exist(
     client: AsyncClient, mocker: MockFixture
 ) -> None:
     mocker.patch(
-        "src.municipality.database.fetch_municipality_by_id",
+        "src.municipality.service.fetch_municipality_by_id",
         return_value=None,
     )
     response = await client.get(f"{ENDPOINT}/00000")
@@ -62,11 +62,11 @@ async def test_post_municipality(
     NAME = "Test City 1"
     STATE = "Test State 1"
     mocker.patch(
-        "src.municipality.database.fetch_municipality_by_id",
+        "src.municipality.service.fetch_municipality_by_id",
         return_value=None,
     )
     mocker.patch(
-        "src.municipality.database.create_municipality",
+        "src.municipality.service.create_municipality",
         return_value={"m_id": ID, "name": NAME, "state": STATE},
     )
     response = await client.post(
@@ -89,7 +89,7 @@ async def test_post_municipality_which_already_exists(
     NAME = "Test City 1"
     STATE = "Test State 1"
     mocker.patch(
-        "src.municipality.database.fetch_municipality_by_id",
+        "src.municipality.service.fetch_municipality_by_id",
         return_value={"m_id": ID, "name": NAME, "state": STATE},
     )
     response = await client.post(
@@ -109,7 +109,7 @@ async def test_update_one_municipality(
     STATE = "Test State 2"
 
     mocker.patch(
-        "src.municipality.database.update_municipality",
+        "src.municipality.service.update_municipality",
         return_value={"m_id": ID, "name": NAME, "state": STATE},
     )
     response = await client.put(
@@ -137,7 +137,7 @@ async def test_update_one_municipality_which_doesnt_exist(
     STATE = "Test State 2"
 
     mocker.patch(
-        "src.municipality.database.update_municipality",
+        "src.municipality.service.update_municipality",
         return_value=None,
     )
     response = await client.put(
@@ -163,7 +163,7 @@ async def test_delete_one_municipality(
     STATE = "Test State 1"
 
     mocker.patch(
-        "src.municipality.database.remove_municipality",
+        "src.municipality.service.remove_municipality",
         return_value={"m_id": ID, "name": NAME, "state": STATE},
     )
     response = await client.delete(

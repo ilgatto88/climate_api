@@ -24,7 +24,7 @@ async def test_get_municipality_data_by_id(client: AsyncClient, mocker: MockFixt
     with open(sample_file_path) as json_file:
         sample_data = json.load(json_file)
     mocker.patch(
-        "src.municipality_data.database.fetch_municipality_data_by_id",
+        "src.municipality_data.service.fetch_municipality_data_by_id",
         return_value=sample_data,
         status_code=200,
     )
@@ -41,7 +41,7 @@ async def test_get_municipality_data_by_id_which_doesnt_exist(
     client: AsyncClient, mocker: MockFixture
 ):
     mocker.patch(
-        "src.municipality_data.database.fetch_municipality_data_by_id",
+        "src.municipality_data.service.fetch_municipality_data_by_id",
         return_value=None,
     )
     response = await client.get(f"{ENDPOINT}/0")
@@ -74,14 +74,14 @@ async def test_post_municipality_data(
     )
 
     mocker.patch(
-        "src.municipality_data.database.fetch_municipality_data_by_id",
+        "src.municipality_data.service.fetch_municipality_data_by_id",
         return_value=None,
     )
 
     with open(sample_file_path) as json_file:
         sample_data = json.load(json_file)
     mocker.patch(
-        "src.municipality_data.database.create_municipality_data",
+        "src.municipality_data.service.create_municipality_data",
         return_value=sample_data,
         status_code=201,
     )

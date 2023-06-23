@@ -3,7 +3,7 @@ from typing import Any
 from fastapi import APIRouter, Depends, HTTPException
 
 from src.auth.bearer import JWTBearer
-from src.municipality_data import database as municipality_data_database
+from src.municipality_data import service as municipality_data_service
 from src.municipality_data.models import MunicipalityData
 
 router = APIRouter()
@@ -15,7 +15,7 @@ async def get_municipality_data_by_id(m_id: int) -> dict[str, Any]:
     Retrieves the climate data for municipality from the database
     based on the given ID.
     """
-    response = await municipality_data_database.fetch_municipality_data_by_id(m_id)
+    response = await municipality_data_service.fetch_municipality_data_by_id(m_id)
     if response:
         return response
     raise HTTPException(
@@ -39,7 +39,7 @@ async def post_municipality_data(
     """
     m_id = municipality_data.meta.municipalityId
     municipality_data_exists = (
-        await municipality_data_database.fetch_municipality_data_by_id(m_id)
+        await municipality_data_service.fetch_municipality_data_by_id(m_id)
     )
     if municipality_data_exists:
         raise HTTPException(
@@ -47,7 +47,7 @@ async def post_municipality_data(
             detail=f"Municipality data with {m_id=} already exists.",
         )
 
-    response = await municipality_data_database.create_municipality_data(
+    response = await municipality_data_service.create_municipality_data(
         municipality_data
     )
     if response:
