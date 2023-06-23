@@ -18,6 +18,9 @@ async def test_create_user(client: AsyncClient, mocker: MockFixture):
     }
     user = UserSchema(**user_data)
     mocker.patch("app.auth.auth_db.create_user", return_value=user)
+    mocker.patch(
+        "app.auth.auth_handler.get_jwt_variables", return_value=("secret", "HS256")
+    )
 
     response = await client.post(f"{ENDPOINT}/signup", json=user_data)
 
