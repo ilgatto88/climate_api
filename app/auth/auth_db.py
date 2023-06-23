@@ -35,14 +35,14 @@ async def remove_user(email: str) -> bool:
     Deletes an user document from the collection based
     on the given email address, and returns True if the deletion was successful.
     """
-    user_exists = await user_collection.find_one({"email": user.email})
+    user_exists = await user_collection.find_one({"email": email})
     if user_exists:
         await user_collection.delete_one({"email": email})
         return True
     return False
 
 
-async def delete_all_users() -> None:
+async def delete_all_users() -> None:  # pragma: no cover
     """Removes all municipalities from the database"""
     x = await user_collection.delete_many({})
     print(f"Removed all ({x.deleted_count}) users from the database.")
