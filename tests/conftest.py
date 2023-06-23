@@ -5,7 +5,7 @@ from src.main import app
 
 BASE_URL = "http://127.0.0.1:8000"
 
-TEST_DATA_PATH = "src/tests/data"
+TEST_DATA_PATH = "tests/data"
 
 
 @pytest.fixture(scope="session")

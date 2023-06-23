@@ -41,7 +41,7 @@ jobs:
           mongodb-version: '6.0'
       - name: Test with pytest
         run: |
-          pytest --cov-config=.coveragerc --cov-report term --cov-report html:htmlcov --cov=src src/tests
+          pytest --cov-config=.coveragerc --cov-report term --cov-report html:htmlcov --cov=src tests
       - name: Upload code coverage html report
         uses: actions/upload-artifact@v3
         with:
