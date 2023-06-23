@@ -4,13 +4,9 @@
 
 ## Project Description
 
----
-
 The climATe API is a RESTful API that provides climate data for Austria. The original data is provided by the Austrian Central Institute for Meteorology and Geodynamics (ZAMG) through their data portal called [Datahub](https://data.hub.zamg.ac.at/). This data was processed into it's final form by the creator of the API. The API is written in Python using the [FastAPI](https://fastapi.tiangolo.com/) framework and the whole application is containerized using [Docker](https://www.docker.com/).
 
 ## Table of Contents
-
----
 
 - [Requirements](#requirements)
 - [Installation](#installation)
@@ -21,16 +17,12 @@ The climATe API is a RESTful API that provides climate data for Austria. The ori
 
 ## Requirements
 
----
-
 For building the application you need:
 
 - a host machine with Docker and Docker Compose installed
 - network connection to the internet
 
 ## Installation
-
----
 
 To build and start the application, make sure to create a `.env` file in the root directory of the project and add the following environment variables:
 
@@ -52,8 +44,6 @@ where `<MONGODB_ROOT_PASSWORD>` is the password you want to use for the MongoDB 
 
 ## Usage and API Documentation
 
----
-
 If you have built the application locally, you can check if it is running by opening the following URL in your browser: `http://127.0.0.1:8000`. You will be automatically redirected to the Swagger UI documentation page of the API. If you want to use the Redoc documentation page, you can open the following URL in your browser: `http://127.0.0.01:8000/redoc`.  
 As visible in the Swagger UI documentation page, the API has currently two endpoints:
 
@@ -73,13 +63,9 @@ where `<MONGODB_ROOT_USER>` and `<MONGODB_ROOT_PASSWORD>` are the credentials th
 
 ## Examples
 
----
-
 Examples are provided by the Swagger UI documentation page.
 
 ## License
-
----
 
 [MIT](LICENSE)
 
