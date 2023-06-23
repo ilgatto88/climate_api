@@ -2,8 +2,8 @@ import json
 
 import pytest
 
-from src.models import Municipality
 from src.municipality import database as municipality_database
+from src.municipality.models import Municipality
 from src.tests.conftest import TEST_DATA_PATH
 
 

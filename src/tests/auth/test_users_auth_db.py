@@ -2,7 +2,7 @@ import pytest
 from pydantic import EmailStr
 
 from src.auth import database as auth_database
-from src.models import UserSchema
+from src.auth.models import UserSchema
 
 
 @pytest.mark.anyio

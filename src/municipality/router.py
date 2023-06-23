@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 
 from src.auth.bearer import JWTBearer
-from src.models import Municipality
 from src.municipality import database as municipality_database
+from src.municipality.models import Municipality
 
 router = APIRouter()
 

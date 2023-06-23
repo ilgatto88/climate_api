@@ -3,8 +3,8 @@ from typing import Any
 from fastapi import APIRouter, Depends, HTTPException
 
 from src.auth.bearer import JWTBearer
-from src.models import MunicipalityData
 from src.municipality_data import database as municipality_data_database
+from src.municipality_data.models import MunicipalityData
 
 router = APIRouter()
 

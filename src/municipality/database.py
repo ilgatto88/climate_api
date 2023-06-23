@@ -1,5 +1,5 @@
 from src.database import geo
-from src.models import Municipality
+from src.municipality.models import Municipality
 
 municipality_collection = geo.Municipality
 

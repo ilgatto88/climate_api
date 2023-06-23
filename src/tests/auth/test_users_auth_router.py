@@ -4,7 +4,7 @@ from httpx import AsyncClient
 from pydantic import EmailStr
 from pytest_mock import MockFixture
 
-from src.models import UserSchema
+from src.auth.models import UserSchema
 
 ENDPOINT = "/api/Users"
 

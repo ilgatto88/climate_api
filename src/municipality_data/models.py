@@ -1,46 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseModel, EmailStr, Field
-
-
-class UserSchema(BaseModel):
-    fullname: str = Field(...)
-    email: EmailStr = Field(...)
-    password: str = Field(...)
-
-    class Config:
-        schema_extra = {
-            "example": {
-                "fullname": "Joe Doe",
-                "email": "joe@example.com",
-                "password": "any",
-            }
-        }
-
-
-class UserLoginSchema(BaseModel):
-    email: EmailStr = Field(...)
-    password: str = Field(...)
-
-    class Config:
-        schema_extra = {"example": {"email": "joe@example.com", "password": "any"}}
-
-
-class Municipality(BaseModel):
-    """Stores municpality related data."""
-
-    m_id: int
-    name: str
-    state: str
-
-    class Config:
-        schema_extra = {
-            "example": {
-                "m_id": 99999,
-                "name": "Testcity",
-                "state": "Teststate",
-            }
-        }
+from pydantic import BaseModel
 
 
 class MunicipalityDataMeta(BaseModel):
@@ -93,4 +53,6 @@ class MunicipalityData(BaseModel):
 
     meta: MunicipalityDataMeta
     historical: MunicipalityDataHistorical
+    ensemble: MunicipalityDataEnsemble
+    ensemble: MunicipalityDataEnsemble
     ensemble: MunicipalityDataEnsemble
