@@ -2,9 +2,11 @@ from pydantic import BaseModel, EmailStr, Field
 
 
 class UserSchema(BaseModel):
-    fullname: str = Field(...)
-    email: EmailStr = Field(...)
-    password: str = Field(...)
+    fullname: str = Field(
+        min_length=1, max_length=50, strip_whitespace=False, to_lower=False
+    )
+    email: EmailStr
+    password: str = Field(min_length=2, max_length=100)
 
     class Config:
         schema_extra = {
@@ -17,8 +19,8 @@ class UserSchema(BaseModel):
 
 
 class UserLoginSchema(BaseModel):
-    email: EmailStr = Field(...)
-    password: str = Field(...)
+    email: EmailStr
+    password: str = Field(min_length=2, max_length=100)
 
     class Config:
         schema_extra = {"example": {"email": "joe@example.com", "password": "any"}}
