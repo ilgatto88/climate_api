@@ -50,7 +50,7 @@ jobs:
 
   
   patch:
-    name: 'Bump version number if needed and tag'
+    name: 'Bump and tag version if needed'
     needs: test
     runs-on: ubuntu-latest
     steps:
