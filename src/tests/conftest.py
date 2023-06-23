@@ -1,11 +1,11 @@
 import pytest
 from httpx import AsyncClient
 
-from app.core.main import app
+from src.core.main import app
 
 BASE_URL = "http://127.0.0.1:8000"
 
-TEST_DATA_PATH = "app/tests/data"
+TEST_DATA_PATH = "src/tests/data"
 
 
 @pytest.fixture(scope="session")

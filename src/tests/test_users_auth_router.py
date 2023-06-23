@@ -4,7 +4,7 @@ from httpx import AsyncClient
 from pydantic import EmailStr
 from pytest_mock import MockFixture
 
-from app.core.models import UserSchema
+from src.core.models import UserSchema
 
 ENDPOINT = "/api/Users"
 
@@ -17,9 +17,9 @@ async def test_create_user(client: AsyncClient, mocker: MockFixture):
         "email": EmailStr("test@example.com"),
     }
     user = UserSchema(**user_data)
-    mocker.patch("app.auth.auth_db.create_user", return_value=user)
+    mocker.patch("src.auth.auth_db.create_user", return_value=user)
     mocker.patch(
-        "app.auth.auth_handler.get_jwt_variables", return_value=("secret", "HS256")
+        "src.auth.auth_handler.get_jwt_variables", return_value=("secret", "HS256")
     )
 
     response = await client.post(f"{ENDPOINT}/signup", json=user_data)
@@ -38,7 +38,7 @@ async def test_create_user_with_existing_email(
         "email": EmailStr("test@example.com"),
     }
     mocker.patch(
-        "app.auth.auth_db.fetch_user_by_email",
+        "src.auth.auth_db.fetch_user_by_email",
         return_value={"email": "test@example.com"},
     )
     response = await client.post(f"{ENDPOINT}/signup", json=user_data)
@@ -52,7 +52,7 @@ async def test_create_user_with_invalid_email(client: AsyncClient, mocker: MockF
         "password": "password123",
         "email": EmailStr("test.example.com"),
     }
-    mocker.patch("app.auth.auth_db.create_user", return_value=user_data)
+    mocker.patch("src.auth.auth_db.create_user", return_value=user_data)
     response = await client.post(f"{ENDPOINT}/signup", json=user_data)
     assert response.status_code == 422
 

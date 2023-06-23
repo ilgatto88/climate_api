@@ -1,7 +1,7 @@
 import requests
 
 from api_data_processing import config, geodataframe_tools, static_geo
-from app.core.main import BASE_API_URI
+from src.core.main import BASE_API_URI
 
 
 def populate(m_id: int, name: str, state: str, token: str):

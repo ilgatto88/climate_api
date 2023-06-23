@@ -1,8 +1,8 @@
 import pytest
 from pydantic import EmailStr
 
-from app.auth import auth_db
-from app.core.models import UserSchema
+from src.auth import auth_db
+from src.core.models import UserSchema
 
 
 @pytest.mark.anyio

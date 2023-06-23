@@ -1,7 +1,7 @@
 from typing import Any
 
-from app.core.database import climate_data
-from app.core.models import MunicipalityData
+from src.core.database import climate_data
+from src.core.models import MunicipalityData
 
 municipality_data_collection = climate_data.MunicipalityData
 

@@ -3,8 +3,8 @@ import asyncio
 import bcrypt
 from pydantic import EmailStr
 
-from app.core.database import admin
-from app.core.models import UserSchema
+from src.core.database import admin
+from src.core.models import UserSchema
 
 user_collection = admin.Users
 

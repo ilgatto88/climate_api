@@ -2,7 +2,7 @@ import requests
 
 from api_data_processing import config, process_municipality_climate_data
 from api_data_processing.models import MunicipalityDataSettings
-from app.core.main import BASE_API_URI
+from src.core.main import BASE_API_URI
 
 
 def populate(data: dict, token: str):

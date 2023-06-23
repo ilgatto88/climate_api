@@ -27,7 +27,7 @@ class InterceptHandler(logging.Handler):
             frame = frame.f_back
             depth += 1
 
-        log = logger.bind(request_id="app")
+        log = logger.bind(request_id="src")
         log.opt(depth=depth, exception=record.exc_info).log(level, record.getMessage())
 
 

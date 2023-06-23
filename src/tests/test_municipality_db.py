@@ -2,9 +2,9 @@ import json
 
 import pytest
 
-from app.core.models import Municipality
-from app.municipality import municipality_db
-from app.tests.conftest import TEST_DATA_PATH
+from src.core.models import Municipality
+from src.municipality import municipality_db
+from src.tests.conftest import TEST_DATA_PATH
 
 
 @pytest.mark.anyio

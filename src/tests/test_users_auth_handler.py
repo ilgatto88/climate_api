@@ -3,7 +3,7 @@ from unittest.mock import ANY, patch
 
 from jwt import DecodeError
 
-from app.auth.auth_handler import decodeJWT, signJWT
+from src.auth.auth_handler import decodeJWT, signJWT
 
 
 def test_signJWT():
@@ -12,7 +12,7 @@ def test_signJWT():
     fake_jwt_algorithm = "HS256"
     fake_token = "fake_token"
 
-    with patch("app.auth.auth_handler.get_jwt_variables") as mock_get_jwt_variables:
+    with patch("src.auth.auth_handler.get_jwt_variables") as mock_get_jwt_variables:
         mock_get_jwt_variables.return_value = (fake_jwt_secret, fake_jwt_algorithm)
 
         with patch("jwt.encode") as mock_jwt_encode:
@@ -37,7 +37,7 @@ def test_decodeJWT():
     fake_jwt_algorithm = "HS256"
     fake_decoded_token = {"user_id": "12345", "expires": time.time() + 600}
 
-    with patch("app.auth.auth_handler.get_jwt_variables") as mock_get_jwt_variables:
+    with patch("src.auth.auth_handler.get_jwt_variables") as mock_get_jwt_variables:
         mock_get_jwt_variables.return_value = (fake_jwt_secret, fake_jwt_algorithm)
 
         with patch("jwt.decode") as mock_jwt_decode:
@@ -57,7 +57,7 @@ def test_decodeJWT_exception():
     fake_jwt_secret = "fake_secret"
     fake_jwt_algorithm = "HS256"
 
-    with patch("app.auth.auth_handler.get_jwt_variables") as mock_get_jwt_variables:
+    with patch("src.auth.auth_handler.get_jwt_variables") as mock_get_jwt_variables:
         mock_get_jwt_variables.return_value = (fake_jwt_secret, fake_jwt_algorithm)
 
         with patch("jwt.decode") as mock_jwt_decode:

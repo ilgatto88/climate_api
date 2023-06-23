@@ -28,7 +28,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install ruff pytest pytest-cov
-          if [ -f app/requirements-dev.txt ]; then pip install -r app/requirements-dev.txt; fi
+          if [ -f src/requirements-dev.txt ]; then pip install -r src/requirements-dev.txt; fi
           if [ -f api_data_processing/requirements-dataprocessing.txt ]; then pip install -r api_data_processing/requirements-dataprocessing.txt; fi
       - name: Static Code Linting with ruff
         run: |
@@ -41,7 +41,7 @@ jobs:
           mongodb-version: '6.0'
       - name: Test with pytest
         run: |
-          pytest --cov-config=.coveragerc --cov-report term --cov-report html:htmlcov --cov=app app/tests
+          pytest --cov-config=.coveragerc --cov-report term --cov-report html:htmlcov --cov=src src/tests
       - name: Upload code coverage html report
         uses: actions/upload-artifact@v3
         with:
@@ -57,25 +57,8 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: '0'
-      - name: Bump major
-        if: contains(github.event.head_commit.message, '!major')
+      - name: Bump version
         id: AutoTaggerMajor
-        uses: anothrNick/github-tag-action@1.36.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          WITH_V: true
-          DEFAULT_BUMP: major
-      - name: Bump minor
-        if: contains(github.event.head_commit.message, '!minor')
-        id: AutoTaggerMinor
-        uses: anothrNick/github-tag-action@1.36.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          WITH_V: true
-          DEFAULT_BUMP: minor
-      - name: Bump patch
-        if: contains(github.event.head_commit.message, '!patch')
-        id: AutoTaggerPatch
         uses: anothrNick/github-tag-action@1.36.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -6,10 +6,10 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 
-from app.auth import auth_router
-from app.logging.custom_logging import CustomizeLogger
-from app.municipality import municipality_router
-from app.municipality_data import municipality_data_router
+from src.auth import auth_router
+from src.logging.custom_logging import CustomizeLogger
+from src.municipality import municipality_router
+from src.municipality_data import municipality_data_router
 
 logger = logging.getLogger(__name__)
 logconfig_path = Path(__file__).parents[1] / "logging" / "logging_config.json"

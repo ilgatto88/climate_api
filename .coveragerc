@@ -1,6 +1,6 @@
 [run]
 omit = 
-    app/tests/*
+    src/tests/*
     */__init__.py
 
 [report]
