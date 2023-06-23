@@ -1,7 +1,7 @@
 import pytest
 from httpx import AsyncClient
 
-from src.core.main import app
+from src.main import app
 
 BASE_URL = "http://127.0.0.1:8000"
 

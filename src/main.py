@@ -6,13 +6,13 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 
-from src.auth import auth_router
+from src.auth import router as auth_router
 from src.logging.custom_logging import CustomizeLogger
-from src.municipality import municipality_router
-from src.municipality_data import municipality_data_router
+from src.municipality import router as municipality_router
+from src.municipality_data import router as municipality_data_router
 
 logger = logging.getLogger(__name__)
-logconfig_path = Path(__file__).parents[1] / "logging" / "logging_config.json"
+logconfig_path = Path(__file__).parents[0] / "logging" / "logging_config.json"
 
 V1_PREFIX = "/api/v1"
 BASE_API_URI = "http://127.0.0.1:8000"

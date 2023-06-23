@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 
-from src.auth.auth_bearer import JWTBearer
-from src.core.models import Municipality
-from src.municipality import municipality_db
+from src.auth.bearer import JWTBearer
+from src.models import Municipality
+from src.municipality import database as municipality_database
 
 router = APIRouter()
 
@@ -13,14 +13,14 @@ async def get_municipalities() -> list[Municipality]:
     Retrieves all municipalities from the database and
     returns them as a list.
     """
-    response = await municipality_db.fetch_all_municipalities()
+    response = await municipality_database.fetch_all_municipalities()
     return response
 
 
 @router.get("/{m_id}", response_model=Municipality)
 async def get_municipality_by_id(m_id: int) -> dict[str, str]:
     """Retrieves a municipality from the database based on the given ID."""
-    response = await municipality_db.fetch_municipality_by_id(m_id)
+    response = await municipality_database.fetch_municipality_by_id(m_id)
     if response:
         return response
     raise HTTPException(
@@ -41,14 +41,14 @@ async def post_municipality(municipality: Municipality) -> Municipality:
     and returns the created municipality.
     """
     m_id = municipality.m_id
-    municipality_exists = await municipality_db.fetch_municipality_by_id(m_id)
+    municipality_exists = await municipality_database.fetch_municipality_by_id(m_id)
     if municipality_exists:
         raise HTTPException(
             status_code=400,
             detail=f"Municipality with {m_id=} already exists.",
         )
 
-    response = await municipality_db.create_municipality(municipality)
+    response = await municipality_database.create_municipality(municipality)
     if response:
         return response
     raise HTTPException(status_code=400, detail="Bad Request")
@@ -65,7 +65,7 @@ async def update_one_municipality(m_id: int, name: str, state: str) -> dict[str,
     Updates the name and state fields of a municipality in the database
     based on the given ID and returns the updated municipality as a response.
     """
-    response = await municipality_db.update_municipality(m_id, name, state)
+    response = await municipality_database.update_municipality(m_id, name, state)
     if response:
         return response
     raise HTTPException(
@@ -80,7 +80,7 @@ async def delete_one_municipality(m_id: int) -> str:
     Deletes a municipality from the database based on the given ID.
     Returns a success message if the deletion is successful.
     """
-    response = await municipality_db.remove_municipality(m_id)
+    response = await municipality_database.remove_municipality(m_id)
     if response:
         return f"Successfully deleted municipality with {m_id=}"
     raise HTTPException(

@@ -2,13 +2,13 @@ import pytest
 from fastapi import HTTPException, Request
 from jwt.exceptions import DecodeError, ExpiredSignatureError
 
-from src.auth.auth_bearer import JWTBearer
+from src.auth.bearer import JWTBearer
 
 
 @pytest.fixture
 def mock_jwt_bearer(mocker):
     mocker.patch(
-        "src.auth.auth_bearer.decodeJWT",
+        "src.auth.bearer.decodeJWT",
         return_value={"sub": "user123"},
     )
 
@@ -30,7 +30,7 @@ async def test_jwt_bearer(mock_jwt_bearer, mocker):
 
     # Test with invalid or expired token
     mocker.patch(
-        "src.auth.auth_bearer.decodeJWT",
+        "src.auth.bearer.decodeJWT",
         side_effect=DecodeError,
     )
     request.headers = {"Authorization": "Bearer invalid_token"}
@@ -38,7 +38,7 @@ async def test_jwt_bearer(mock_jwt_bearer, mocker):
         await bearer(request)
 
     mocker.patch(
-        "src.auth.auth_bearer.decodeJWT",
+        "src.auth.bearer.decodeJWT",
         side_effect=ExpiredSignatureError,
     )
     request.headers = {"Authorization": "Bearer expired_token"}

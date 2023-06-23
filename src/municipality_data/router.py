@@ -2,9 +2,9 @@ from typing import Any
 
 from fastapi import APIRouter, Depends, HTTPException
 
-from src.auth.auth_bearer import JWTBearer
-from src.core.models import MunicipalityData
-from src.municipality_data import municipality_data_db
+from src.auth.bearer import JWTBearer
+from src.models import MunicipalityData
+from src.municipality_data import database as municipality_data_database
 
 router = APIRouter()
 
@@ -15,7 +15,7 @@ async def get_municipality_data_by_id(m_id: int) -> dict[str, Any]:
     Retrieves the climate data for municipality from the database
     based on the given ID.
     """
-    response = await municipality_data_db.fetch_municipality_data_by_id(m_id)
+    response = await municipality_data_database.fetch_municipality_data_by_id(m_id)
     if response:
         return response
     raise HTTPException(
@@ -38,8 +38,8 @@ async def post_municipality_data(
     and returns the created municipality data.
     """
     m_id = municipality_data.meta.municipalityId
-    municipality_data_exists = await municipality_data_db.fetch_municipality_data_by_id(
-        m_id
+    municipality_data_exists = (
+        await municipality_data_database.fetch_municipality_data_by_id(m_id)
     )
     if municipality_data_exists:
         raise HTTPException(
@@ -47,7 +47,9 @@ async def post_municipality_data(
             detail=f"Municipality data with {m_id=} already exists.",
         )
 
-    response = await municipality_data_db.create_municipality_data(municipality_data)
+    response = await municipality_data_database.create_municipality_data(
+        municipality_data
+    )
     if response:
         return response
     raise HTTPException(status_code=400, detail="Bad Request")
