@@ -8,7 +8,7 @@ from app.core.models import UserLoginSchema, UserSchema
 router = APIRouter()
 
 
-@router.post("/signup", include_in_schema=False)
+@router.post("/signup", include_in_schema=False, status_code=201)
 async def create_user(user: UserSchema = Body(...)) -> dict[str, str]:
     """
     Creates a new user in the database with the provided data
