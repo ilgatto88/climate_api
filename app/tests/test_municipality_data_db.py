@@ -7,7 +7,12 @@ from app.municipality_data import municipality_data_db
 from app.tests.conftest import TEST_DATA_PATH
 
 
-@pytest.mark.anyio(scope="module")
+@pytest.mark.anyio
+async def test_remove_all_municipality_data():
+    await municipality_data_db.remove_all_municipality_data()
+
+
+@pytest.mark.anyio
 async def test_create_municipality_data():
     sample_municipality_data_file_path = (
         f"{TEST_DATA_PATH}/sample_municipality_data.json"
@@ -32,11 +37,10 @@ async def test_fetch_municipality_data_by_id():
 @pytest.mark.anyio
 async def test_remove_municipality_data_by_id():
     municipality_data = await municipality_data_db.remove_municipality_data_by_id(10101)
-    assert municipality_data is not None
-    assert municipality_data["meta"]["municipalityId"] == 10101
+    assert municipality_data is True
 
 
 @pytest.mark.anyio
 async def test_remove_municipality_data_by_id_not_found():
     municipality_data = await municipality_data_db.remove_municipality_data_by_id(10101)
-    assert municipality_data is None
+    assert municipality_data is False
