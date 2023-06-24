@@ -3,6 +3,7 @@ from dataclasses import dataclass
 import geopandas
 
 from api_data_processing import config, geodataframe_tools
+from api_data_processing.static_geo import VIENNA_GIDS
 
 
 @dataclass
@@ -34,6 +35,8 @@ class MunicipalityDataSettings:
     def load_geodataframe(self) -> geopandas.GeoDataFrame:
         """Loads the geodataframe for the chosen municipality."""
         geo_df = geodataframe_tools.load_shapefile(config.MUNICIPALITY_SHAPEFILE)
-        return geodataframe_tools.filter_geodataframe_by_ids(
-            geo_df, [str(self.municipalityId)]
-        )
+        if self.municipalityId == 90000:
+            id_list = VIENNA_GIDS
+        else:
+            id_list = [str(self.municipalityId)]
+        return geodataframe_tools.filter_geodataframe_by_ids(geo_df, id_list)
