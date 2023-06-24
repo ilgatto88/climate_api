@@ -25,13 +25,13 @@ async def fetch_municipality_by_id(m_id: int) -> dict[str, str] | None:
     return document
 
 
-async def create_municipality(municipality: Municipality) -> Municipality:
+async def create_municipality(municipality: Municipality) -> dict[str, str]:
     """
     Inserts a new municipality document into the collection
     and returns the created municipality.
     """
     await municipality_collection.insert_one(municipality.dict())
-    return municipality
+    return municipality.dict()
 
 
 async def create_many_municipalities(
@@ -45,27 +45,18 @@ async def create_many_municipalities(
     return municipalities
 
 
-async def update_municipality(
-    m_id: int,
-    name: str,
-    state: str,
-) -> dict[str, str] | None:
+async def update_municipality(m_id: int, data: dict[str, str]) -> dict[str, str] | None:
     """
     Updates the name and state fields of a municipality document
     identified by the given ID, and returns the updated document.
     """
-    await municipality_collection.update_one(
+    updated_municipality = await municipality_collection.update_one(
         {"m_id": m_id},
-        {
-            "$set": {
-                "name": name,
-                "state": state,
-            }
-        },
+        {"$set": data},
     )
-
-    document = await municipality_collection.find_one({"m_id": m_id})
-    return document
+    if updated_municipality.modified_count == 1:
+        return await municipality_collection.find_one({"m_id": m_id})
+    return None
 
 
 async def remove_municipality(m_id: int) -> bool:
@@ -73,9 +64,10 @@ async def remove_municipality(m_id: int) -> bool:
     Deletes a municipality document from the collection based
     on the given ID, and returns True if the deletion was successful.
     """
-    municipality_exists = await municipality_collection.find_one({"m_id": m_id})
-    if municipality_exists:
-        await municipality_collection.delete_one({"m_id": m_id})
+    # municipality_exists = await municipality_collection.find_one({"m_id": m_id})
+    # if municipality_exists:
+    deleted_municipality = await municipality_collection.delete_one({"m_id": m_id})
+    if deleted_municipality.deleted_count == 1:
         return True
     return False
 
