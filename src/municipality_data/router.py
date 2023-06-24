@@ -1,55 +1,46 @@
-from typing import Any
+from typing import Mapping
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 
 from src.auth.bearer import JWTBearer
 from src.municipality_data import service as municipality_data_service
+from src.municipality_data.dependencies import (
+    municipality_data_exists,
+    municipality_data_not_exists,
+)
 from src.municipality_data.models import MunicipalityData
 
 router = APIRouter()
 
 
-@router.get("/{m_id}", response_model=MunicipalityData)
-async def get_municipality_data_by_id(m_id: int) -> dict[str, Any]:
+@router.get(
+    "/{m_id}",
+    name="Get municipality data by ID",
+    response_model=MunicipalityData,
+    status_code=200,
+)
+async def get_municipality_data_by_id(
+    municipality_data: Mapping = Depends(municipality_data_exists),
+) -> Mapping | None:
     """
-    Retrieves the climate data for municipality from the database
+    Retrieves the climate data for a municipality from the database
     based on the given ID.
     """
-    response = await municipality_data_service.fetch_municipality_data_by_id(m_id)
-    if response:
-        return response
-    raise HTTPException(
-        status_code=404,
-        detail=f"There is no municipality data in the database with {m_id=}",
-    )
+    return municipality_data
 
 
 @router.post(
     "/",
+    name="Create new municipality data",
     response_model=MunicipalityData,
     status_code=201,
     dependencies=[Depends(JWTBearer())],
 )
 async def post_municipality_data(
-    municipality_data: MunicipalityData,
+    municipality_data: MunicipalityData = Depends(municipality_data_not_exists),
 ) -> MunicipalityData:
     """
     Creates a new municipality data in the database with the provided data
     and returns the created municipality data.
     """
-    m_id = municipality_data.meta.municipalityId
-    municipality_data_exists = (
-        await municipality_data_service.fetch_municipality_data_by_id(m_id)
-    )
-    if municipality_data_exists:
-        raise HTTPException(
-            status_code=400,
-            detail=f"Municipality data with {m_id=} already exists.",
-        )
-
-    response = await municipality_data_service.create_municipality_data(
-        municipality_data
-    )
-    if response:
-        return response
-    raise HTTPException(status_code=400, detail="Bad Request")
+    return await municipality_data_service.create_municipality_data(municipality_data)

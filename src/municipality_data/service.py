@@ -31,18 +31,15 @@ async def remove_municipality_data_by_id(m_id: int) -> bool:
     """
     Removes a municipality data document from the collection based on the given ID.
     """
-    municipality_data_exists = await municipality_data_collection.find_one(
+    dateled_municipality_data = await municipality_data_collection.delete_one(
         {"meta.municipalityId": m_id}
     )
-    if municipality_data_exists:
-        await municipality_data_collection.delete_one({"meta.municipalityId": m_id})
+    if dateled_municipality_data.deleted_count == 1:
         return True
     return False
 
 
 async def remove_all_municipality_data() -> None:
-    """
-    Removes all municipality data documents from the collection.
-    """
+    """Removes all municipality data documents from the database."""
     x = await municipality_data_collection.delete_many({})
     print(f"Removed all ({x.deleted_count}) municipalities from the database.")
