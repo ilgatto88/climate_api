@@ -18,7 +18,12 @@ async def get_municipalities() -> list[Municipality]:
     return response
 
 
-@router.get("/{m_id}", response_model=Municipality, status_code=200)
+@router.get(
+    "/{m_id}",
+    name="Get municipality by ID",
+    response_model=Municipality,
+    status_code=200,
+)
 async def get_municipality_by_id(
     municipality: Mapping = Depends(municipality_exists),
 ) -> Mapping | None:
@@ -28,6 +33,7 @@ async def get_municipality_by_id(
 
 @router.post(
     "/",
+    name="Create a new municipality",
     response_model=Municipality,
     status_code=201,
     dependencies=[Depends(JWTBearer())],
@@ -41,6 +47,7 @@ async def post_municipality(
 
 @router.put(
     "/{m_id}",
+    name="Update a municipality",
     response_model=Municipality,
     status_code=201,
     dependencies=[Depends(JWTBearer())],
@@ -58,7 +65,12 @@ async def update_municipality(
     raise MunicipalityNotFound(m_id)
 
 
-@router.delete("/{m_id}", status_code=200, dependencies=[Depends(JWTBearer())])
+@router.delete(
+    "/{m_id}",
+    name="Delete a municipality",
+    status_code=200,
+    dependencies=[Depends(JWTBearer())],
+)
 async def delete_municipality(m_id: int) -> str:
     """Deletes a municipality in the database based on the given ID"""
     deleted_municipality = await municipality_service.remove_municipality(m_id)
