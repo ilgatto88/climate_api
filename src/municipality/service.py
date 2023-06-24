@@ -64,8 +64,6 @@ async def remove_municipality(m_id: int) -> bool:
     Deletes a municipality document from the collection based
     on the given ID, and returns True if the deletion was successful.
     """
-    # municipality_exists = await municipality_collection.find_one({"m_id": m_id})
-    # if municipality_exists:
     deleted_municipality = await municipality_collection.delete_one({"m_id": m_id})
     if deleted_municipality.deleted_count == 1:
         return True
