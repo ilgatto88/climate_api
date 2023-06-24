@@ -1,32 +1,29 @@
-from fastapi import APIRouter, Depends, HTTPException
+from typing import Mapping
+
+from fastapi import APIRouter, Depends
 
 from src.auth.bearer import JWTBearer
 from src.municipality import service as municipality_service
-from src.municipality.models import Municipality
+from src.municipality.dependencies import municipality_exists, municipality_not_exists
+from src.municipality.exceptions import MunicipalityNotFound
+from src.municipality.models import Municipality, MunicipalityUpdate
 
 router = APIRouter()
 
 
-@router.get("/", name="Get all municipalities")
+@router.get("/", name="Get all municipalities", status_code=200)
 async def get_municipalities() -> list[Municipality]:
-    """
-    Retrieves all municipalities from the database and
-    returns them as a list.
-    """
+    """Returns all municipalities in the database"""
     response = await municipality_service.fetch_all_municipalities()
     return response
 
 
-@router.get("/{m_id}", response_model=Municipality)
-async def get_municipality_by_id(m_id: int) -> dict[str, str]:
-    """Retrieves a municipality from the database based on the given ID."""
-    response = await municipality_service.fetch_municipality_by_id(m_id)
-    if response:
-        return response
-    raise HTTPException(
-        status_code=404,
-        detail=f"There is no municipality in the database with {m_id=}",
-    )
+@router.get("/{m_id}", response_model=Municipality, status_code=200)
+async def get_municipality_by_id(
+    municipality: Mapping = Depends(municipality_exists),
+) -> Mapping | None:
+    """Returns a municipality based on the given ID"""
+    return municipality
 
 
 @router.post(
@@ -35,23 +32,11 @@ async def get_municipality_by_id(m_id: int) -> dict[str, str]:
     status_code=201,
     dependencies=[Depends(JWTBearer())],
 )
-async def post_municipality(municipality: Municipality) -> Municipality:
-    """
-    Creates a new municipality in the database with the provided data
-    and returns the created municipality.
-    """
-    m_id = municipality.m_id
-    municipality_exists = await municipality_service.fetch_municipality_by_id(m_id)
-    if municipality_exists:
-        raise HTTPException(
-            status_code=400,
-            detail=f"Municipality with {m_id=} already exists.",
-        )
-
-    response = await municipality_service.create_municipality(municipality)
-    if response:
-        return response
-    raise HTTPException(status_code=400, detail="Bad Request")
+async def post_municipality(
+    municipality: Municipality = Depends(municipality_not_exists),
+) -> dict[str, str]:
+    """Creates a new municipality in the database"""
+    return await municipality_service.create_municipality(municipality)
 
 
 @router.put(
@@ -60,30 +45,23 @@ async def post_municipality(municipality: Municipality) -> Municipality:
     status_code=201,
     dependencies=[Depends(JWTBearer())],
 )
-async def update_one_municipality(m_id: int, name: str, state: str) -> dict[str, str]:
-    """
-    Updates the name and state fields of a municipality in the database
-    based on the given ID and returns the updated municipality as a response.
-    """
-    response = await municipality_service.update_municipality(m_id, name, state)
-    if response:
-        return response
-    raise HTTPException(
-        status_code=404,
-        detail=f"There is no municipality in the database with {m_id=}",
+async def update_municipality(
+    m_id: int,
+    update_data: MunicipalityUpdate,
+) -> dict[str, str]:
+    """Updates a municipality in the database based on the given ID"""
+    updated_municipality = await municipality_service.update_municipality(
+        m_id, update_data.dict()
     )
+    if updated_municipality:
+        return updated_municipality
+    raise MunicipalityNotFound(m_id)
 
 
-@router.delete("/{m_id}", dependencies=[Depends(JWTBearer())])
-async def delete_one_municipality(m_id: int) -> str:
-    """
-    Deletes a municipality from the database based on the given ID.
-    Returns a success message if the deletion is successful.
-    """
-    response = await municipality_service.remove_municipality(m_id)
-    if response:
+@router.delete("/{m_id}", status_code=200, dependencies=[Depends(JWTBearer())])
+async def delete_municipality(m_id: int) -> str:
+    """Deletes a municipality in the database based on the given ID"""
+    deleted_municipality = await municipality_service.remove_municipality(m_id)
+    if deleted_municipality:
         return f"Successfully deleted municipality with {m_id=}"
-    raise HTTPException(
-        status_code=404,
-        detail=f"There is no municipality in the database with {m_id=}",
-    )
+    raise MunicipalityNotFound(m_id)
