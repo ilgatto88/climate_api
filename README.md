@@ -47,8 +47,8 @@ where `<MONGODB_ROOT_PASSWORD>` is the password you want to use for the MongoDB 
 If you have built the application locally, you can check if it is running by opening the following URL in your browser: `http://127.0.0.1:8000`. You will be automatically redirected to the Swagger UI documentation page of the API. If you want to use the Redoc documentation page, you can open the following URL in your browser: `http://127.0.0.01:8000/redoc`.  
 As visible in the Swagger UI documentation page, the API has currently two endpoints:
 
-- `/api/v1/Municipalities/`
-- `/api/v1/MunicipalityData/`
+- `/api/v1/municipalities/`
+- `/api/v1/municipalitydata/`
 
 POST, PUT or DELETE methods are only allowed for the root user. The root user is the user that is created when the MongoDB container is started for the first time. The root user credentials are the ones that you have specified in the `.env` file. To authenticate using the Swagger UI, select the POST method at the Users section and click on the "Try it out" button. Then enter the following JSON in the Request Body field:
 

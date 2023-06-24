@@ -5,7 +5,7 @@ from src.main import BASE_API_URI
 
 
 def populate(m_id: int, name: str, state: str, token: str):
-    API_URI = f"{BASE_API_URI}/api/v1/Municipalities/"
+    API_URI = f"{BASE_API_URI}/api/v1/municipalities/"
     headers = {
         "accept": "application/json",
         "Authorization": "Bearer {}".format(token),

@@ -6,7 +6,7 @@ from src.main import BASE_API_URI
 
 
 def populate(data: dict, token: str):
-    API_URI = f"{BASE_API_URI}/api/v1/MunicipalityData/"
+    API_URI = f"{BASE_API_URI}/api/v1/municipalitydata/"
     headers = {
         "accept": "application/json",
         "Authorization": "Bearer {}".format(token),
