@@ -1,6 +1,6 @@
 from typing import Mapping
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, status
 
 from src.auth.bearer import JWTBearer
 from src.municipality import service as municipality_service
@@ -11,7 +11,7 @@ from src.municipality.models import Municipality, MunicipalityUpdate
 router = APIRouter()
 
 
-@router.get("/", name="Get all municipalities", status_code=200)
+@router.get("/", name="Get all municipalities", status_code=status.HTTP_200_OK)
 async def get_municipalities() -> list[Municipality]:
     """Returns all municipalities in the database"""
     response = await municipality_service.fetch_all_municipalities()
@@ -22,7 +22,7 @@ async def get_municipalities() -> list[Municipality]:
     "/{m_id}",
     name="Get municipality by ID",
     response_model=Municipality,
-    status_code=200,
+    status_code=status.HTTP_200_OK,
 )
 async def get_municipality_by_id(
     municipality: Mapping = Depends(municipality_exists),
@@ -35,7 +35,7 @@ async def get_municipality_by_id(
     "/",
     name="Create a new municipality",
     response_model=Municipality,
-    status_code=201,
+    status_code=status.HTTP_201_CREATED,
     dependencies=[Depends(JWTBearer())],
 )
 async def post_municipality(
@@ -49,7 +49,7 @@ async def post_municipality(
     "/{m_id}",
     name="Update a municipality",
     response_model=Municipality,
-    status_code=201,
+    status_code=status.HTTP_200_OK,
     dependencies=[Depends(JWTBearer())],
 )
 async def update_municipality(
@@ -68,7 +68,7 @@ async def update_municipality(
 @router.delete(
     "/{m_id}",
     name="Delete a municipality",
-    status_code=200,
+    status_code=status.HTTP_200_OK,
     dependencies=[Depends(JWTBearer())],
 )
 async def delete_municipality(m_id: int) -> str:

@@ -107,7 +107,7 @@ async def test_put_municipality(
         f"{ENDPOINT}/{municipality_instance_1.m_id}",
         json=municipality_instance_1_update.dict(exclude={"m_id"}),
     )
-    assert response.status_code == 201
+    assert response.status_code == 200
     assert response.json() == municipality_instance_1_update.dict()
 
 

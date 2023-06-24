@@ -1,6 +1,6 @@
 from typing import Mapping
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, status
 
 from src.auth.bearer import JWTBearer
 from src.municipality_data import service as municipality_data_service
@@ -17,7 +17,7 @@ router = APIRouter()
     "/{m_id}",
     name="Get municipality data by ID",
     response_model=MunicipalityData,
-    status_code=200,
+    status_code=status.HTTP_200_OK,
 )
 async def get_municipality_data_by_id(
     municipality_data: Mapping = Depends(municipality_data_exists),
@@ -33,7 +33,7 @@ async def get_municipality_data_by_id(
     "/",
     name="Create new municipality data",
     response_model=MunicipalityData,
-    status_code=201,
+    status_code=status.HTTP_201_CREATED,
     dependencies=[Depends(JWTBearer())],
 )
 async def post_municipality_data(
