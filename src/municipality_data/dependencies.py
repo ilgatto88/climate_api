@@ -25,6 +25,3 @@ async def municipality_data_not_exists(
     if municipality_data is None:
         return instance
     raise MunicipalityDataAlreadyExists(instance.meta.municipalityId)
-    if municipality_data is None:
-        return instance
-    raise MunicipalityDataAlreadyExists(instance.meta.municipalityId)
