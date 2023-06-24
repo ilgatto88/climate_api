@@ -4,7 +4,7 @@ from pytest_mock import MockFixture
 
 from src.municipality.models import Municipality
 
-ENDPOINT = "/api/v1/Municipalities"
+ENDPOINT = "/api/v1/municipalities"
 
 municipality_instance_1 = Municipality(m_id=1, name="Test City 1", state="Test State 1")
 municipality_instance_1_update = Municipality(

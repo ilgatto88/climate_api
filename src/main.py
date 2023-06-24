@@ -37,12 +37,12 @@ app = create_app()
 
 app.include_router(
     municipality_data_router.router,
-    prefix=f"{V1_PREFIX}/MunicipalityData",
-    tags=["MunicipalityData"],
+    prefix=f"{V1_PREFIX}/municipalitydata",
+    tags=["Municipality Data"],
 )
 app.include_router(
     municipality_router.router,
-    prefix=f"{V1_PREFIX}/Municipalities",
+    prefix=f"{V1_PREFIX}/municipalities",
     tags=["Municipalities"],
 )
 app.include_router(
