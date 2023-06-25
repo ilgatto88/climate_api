@@ -2,7 +2,7 @@ name: Smokeshow
 
 on:
   workflow_run:
-    workflows: [Code quality and tests]
+    workflows: [CI]
     types: [completed]
 
 permissions:
