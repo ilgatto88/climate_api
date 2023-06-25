@@ -3,7 +3,13 @@ from unittest.mock import ANY, patch
 
 from jwt import DecodeError
 
-from src.auth.handler import decodeJWT, signJWT
+from src.auth.handler import decodeJWT, get_jwt_variables, signJWT
+
+
+def test_get_jwt_variables():
+    JWT_SECRET, JWT_ALGORITHM = get_jwt_variables()
+    assert isinstance(JWT_SECRET, str)
+    assert JWT_ALGORITHM == "HS256"
 
 
 def test_signJWT():
