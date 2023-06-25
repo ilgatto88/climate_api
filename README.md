@@ -1,6 +1,7 @@
 # climATe API: Climate Data API for Austria
 
-[![CI](https://github.com/ilgatto88/climate_api/actions/workflows/test.yml/badge.svg)](https://github.com/ilgatto88/climate_api/actions/workflows/test.yml) [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/charliermarsh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) [![License: CC BY-NC SA 4.0](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-orange)](https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode)
+[![CI](https://github.com/ilgatto88/climate_api/actions/workflows/test.yml/badge.svg)](https://github.com/ilgatto88/climate_api/actions/workflows/test.yml) [![codecov](https://codecov.io/github/ilgatto88/climate_api/branch/master/graph/badge.svg?token=CG91QI9FRV)](https://codecov.io/github/ilgatto88/climate_api) [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/charliermarsh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)  
+[![License: CC BY-NC SA 4.0](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-orange)](https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode)
 
 ## Project Description
 
