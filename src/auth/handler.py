@@ -1,11 +1,16 @@
+import os
 import time
 
 import jwt
 from decouple import UndefinedValueError, config
+from dotenv import load_dotenv
 from jwt.exceptions import DecodeError
 
 
 def get_jwt_variables() -> tuple[str, str]:
+    if not os.path.isfile(".env"):
+        load_dotenv(".env-example")
+
     JWT_SECRET = config("JWT_SECRET", cast=str)
     JWT_ALGORITHM = config("JWT_ALGORITHM", cast=str)
 
