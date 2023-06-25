@@ -47,20 +47,3 @@ jobs:
         with:
           name: code-coverage-report
           path: htmlcov
-
-  
-  patch:
-    name: 'Bump and tag version if needed'
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: '0'
-      - name: Bump version
-        id: AutoTaggerMajor
-        uses: anothrNick/github-tag-action@1.67.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          WITH_V: true
-          DEFAULT_BUMP: none
