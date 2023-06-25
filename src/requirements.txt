@@ -8,4 +8,5 @@ PyJWT
 pydantic
 pydantic[email]
 python-decouple
+python-dotenv
 uvicorn[standard]
