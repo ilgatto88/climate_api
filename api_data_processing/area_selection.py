@@ -1,4 +1,6 @@
 import geopandas as gpd
+import rioxarray
+import rioxarray.exceptions
 import xarray as xr
 
 from api_data_processing.general import calculate_along_dimension
@@ -6,10 +8,15 @@ from api_data_processing.general import calculate_along_dimension
 
 def clip_dataset(dataset: xr.Dataset, area: gpd.GeoDataFrame) -> xr.Dataset:
     """
-    Clips the dataset using the geometry of a GeoDataFrame and
-    returns the clipped dataset.
+    Clips the dataset using the geometry of a GeoDataFrame and returns the
+    clipped dataset. If the selected area does not touch any of the centres
+    of the pixels, the all_touched parameter is set to True. This way all
+    sorrounding pixels are also included in the clipped dataset.
     """
-    return dataset.rio.clip(area.geometry)
+    try:
+        return dataset.rio.clip(area.geometry)
+    except rioxarray.exceptions.NoDataInBounds:
+        return dataset.rio.clip(area.geometry, all_touched=True)
 
 
 def clip_box_dataset(
