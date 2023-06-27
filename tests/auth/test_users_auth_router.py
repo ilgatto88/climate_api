@@ -66,3 +66,21 @@ async def test_not_existing_user_login(client: AsyncClient, mocker: MockFixture)
     user_data["password"] = hashed_password.decode()
     response = await client.post(f"{ENDPOINT}/login", json=user_data)
     assert response.status_code == 401
+
+
+@pytest.mark.anyio
+async def test_existing_user_login(client: AsyncClient, mocker: MockFixture):
+    user_data = {
+        "fullname": "testuser",
+        "password": "password123",
+        "email": EmailStr("test@example.com"),
+    }
+    hashed_password = bcrypt.hashpw(user_data["password"].encode(), bcrypt.gensalt())
+    user_data["password"] = hashed_password.decode()
+    mocker.patch("src.auth.service.fetch_user_by_email", return_value=user_data)
+    response = await client.post(
+        f"{ENDPOINT}/login",
+        json={"email": user_data["email"], "password": "password123"},
+    )
+    assert response.status_code == 200
+    assert "access_token" in response.json()
