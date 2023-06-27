@@ -91,3 +91,23 @@ async def test_post_municipality_data(
     assert type(response.json()) == dict
     assert all(key in response.json() for key in main_keys)
     assert all(key in response.json()["meta"] for key in meta_keys)
+
+
+@pytest.mark.anyio
+async def test_post_municipality_data_with_existing_m_id(
+    client: AsyncClient, mocker: MockFixture, mock_jwt_bearer: None
+):
+    sample_file_path = f"{TEST_DATA_PATH}/sample_municipality_data.json"
+    with open(sample_file_path) as json_file:
+        sample_data = json.load(json_file)
+
+    mocker.patch(
+        "src.municipality_data.service.fetch_municipality_data_by_id",
+        return_value=sample_data,
+    )
+
+    response = await client.post(ENDPOINT, json=sample_data)
+    assert response.status_code == 400
+    response_text_part1 = "There is already a municipality data "
+    response_text_part2 = "document in the database with m_id=10101"
+    assert response.json() == {"detail": response_text_part1 + response_text_part2}
