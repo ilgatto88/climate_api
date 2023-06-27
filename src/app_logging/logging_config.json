@@ -1,6 +1,6 @@
 {
     "logger": {
-      "path": "climate_api_access.log",
+      "path": "../climate_api_access.log",
       "level": "info",
       "rotation": "20 days",
       "retention": "1 months",
