@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 import geopandas
 
-from api_data_processing import geodataframe_tools
+from api_data_processing import config, geodataframe_tools
 from api_data_processing.static_geo import VIENNA_GIDS
 
 
@@ -18,6 +18,13 @@ class MunicipalityDataSettings:
     ensemble_start_year: int
     ensemble_end_year: int
     shape: geopandas.GeoDataFrame
+
+    def create_future_input_file_path(self, scenario: str) -> str:
+        """Creates the future input file path string."""
+        return (
+            f"{config.BASE_DATA_PATH}climate_data/netcdf/{scenario}/"
+            f"oeks-{scenario}-{self.climateParameter}-austria-YS.nc"
+        )
 
     def load_geodataframe(self) -> geopandas.GeoDataFrame:
         """Loads the geodataframe for the chosen municipality."""
