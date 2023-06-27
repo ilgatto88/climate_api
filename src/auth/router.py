@@ -22,10 +22,8 @@ async def create_user(user: UserSchema = Body(...)) -> dict[str, str]:
             detail=f"User with email '{user.email}' already exists.",
         )
 
-    response = await auth_service.create_user(user)
-    if response:
-        return signJWT(user.email)
-    raise HTTPException(status_code=400, detail="Bad Request")
+    await auth_service.create_user(user)
+    return signJWT(user.email)
 
 
 @router.post("/login")
