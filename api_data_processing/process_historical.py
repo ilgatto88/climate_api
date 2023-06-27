@@ -1,32 +1,35 @@
+import geopandas
 import xarray as xr
 
 from api_data_processing import area_selection, config, general
-from api_data_processing.loaders import load_dataset
 from api_data_processing.models import MunicipalityDataSettings
 
 
-def create_historical_raw_data(
+def preprocess_historical_data(
+    dataset: xr.Dataset,
     settings: MunicipalityDataSettings,
-) -> dict[str, list[float]]:
-    historical_input_path = settings.create_historical_input_file_path()
-    data = load_dataset(path=historical_input_path)
+    area_geodataframe: geopandas.GeoDataFrame,
+) -> xr.DataArray:
+    """Loads the historical data and cuts it to the selected area."""
     area_data = area_selection.reduce_area(
-        data, settings.climateParameter, settings.load_geodataframe()
+        dataset, settings.climateParameter, area_geodataframe
     )
-    raw_data = [round(float(value), 1) for value in area_data.values]
+    return area_data
+
+
+def create_historical_raw_data(
+    preprocessed_data: xr.DataArray,
+) -> dict[str, list[float]]:
+    raw_data = [round(float(value), 1) for value in preprocessed_data.values]
     return {"rawData": raw_data}
 
 
-def create_historical_statistics(settings: MunicipalityDataSettings) -> dict[str, dict]:
-    historical_input_path = settings.create_historical_input_file_path()
-    data = load_dataset(path=historical_input_path)
-    area_data = area_selection.reduce_area(
-        data, settings.climateParameter, settings.load_geodataframe()
-    )
-
+def create_historical_statistics(preprocessed_data: xr.DataArray) -> dict[str, dict]:
     statistics_dictionaries = {}
     for period in config.STATISTIC_PERIODS_HISTORICAL:
-        period_data = create_historical_0d_stats(area_data, period[0], period[1])
+        period_data = create_historical_0d_stats(
+            preprocessed_data, period[0], period[1]
+        )
         statistics_dictionaries.update(period_data)
 
     return {"statistics0D": statistics_dictionaries}
