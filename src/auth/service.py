@@ -1,7 +1,4 @@
-import asyncio
-
 import bcrypt
-from pydantic import EmailStr
 
 from src.auth.models import UserSchema
 from src.database import admin
@@ -46,20 +43,3 @@ async def delete_all_users() -> None:  # pragma: no cover
     """Removes all municipalities from the database"""
     x = await user_collection.delete_many({})
     print(f"Removed all ({x.deleted_count}) users from the database.")
-
-
-if __name__ == "__main__":
-    user = UserSchema(
-        fullname="Joe",
-        email=EmailStr("jt@example.com"),
-        password="hello123",
-    )
-
-    loop = asyncio.new_event_loop()
-    try:
-        # print(loop.run_until_complete(create_user(user)))
-        print(loop.run_until_complete(fetch_user_by_email(user.email)))
-        # print(loop.run_until_complete(remove_user(user.email)))
-        # loop.run_until_complete(delete_all_users())
-    except KeyboardInterrupt:
-        pass
