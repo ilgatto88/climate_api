@@ -1,3 +1,4 @@
+import geopandas
 import pandas as pd
 import xarray as xr
 
@@ -11,34 +12,33 @@ from api_data_processing import (
 from api_data_processing.models import MunicipalityDataSettings
 
 
-def oeks_1d_data_pipeline(
+def preprocess_ensemble_data(
     settings: MunicipalityDataSettings,
     scenario: str,
-) -> pd.DataFrame:
+    area_geodataframe: geopandas.GeoDataFrame,
+) -> xr.DataArray:
     data = loaders.load_dataset(settings.create_future_input_file_path(scenario))
     area_data = area_selection.reduce_area(
-        data, settings.climateParameter, settings.load_geodataframe()
+        data, settings.climateParameter, area_geodataframe
     )
+    return area_data
 
-    columns = data[settings.climateParameter].realization.values
+
+def oeks_1d_data_pipeline(preprocessed_data: xr.DataArray) -> pd.DataFrame:
+    columns = preprocessed_data.realization.values
     index = list(range(config.ENSEMBLE_START_YEAR, config.ENSEMBLE_END_YEAR + 1))
     data_as_dataframe = pd.DataFrame(
-        area_data, index=columns, columns=index
+        preprocessed_data, index=columns, columns=index
     ).transpose()
     return data_statistics.add_oeks_statistics(data_as_dataframe)
 
 
 def oeks_0d_data_pipeline(
-    settings: MunicipalityDataSettings,
-    scenario: str,
+    preprocessed_data: xr.DataArray,
 ) -> dict[str, dict[str, float]]:
-    data = loaders.load_dataset(settings.create_future_input_file_path(scenario))
-    area_data = area_selection.reduce_area(
-        data, settings.climateParameter, settings.load_geodataframe()
-    )
     statistics_dictionaries = {"statistics0D": {}}
     for period in config.STATISTIC_PERIODS_OEKS:
-        period_data = create_oeks_0d_stats(area_data, period[0], period[1])
+        period_data = create_oeks_0d_stats(preprocessed_data, period[0], period[1])
         statistics_dictionaries["statistics0D"].update(period_data)
 
     return statistics_dictionaries
