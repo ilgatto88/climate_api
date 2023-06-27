@@ -25,20 +25,7 @@ For building the application you need:
 
 ## Installation
 
-To build and start the application, make sure to create a `.env` file in the root directory of the project and add the following environment variables:
-
-- MONGO_INITDB_ROOT_USERNAME, example: `MONGO_INITDB_ROOT_USERNAME=root`
-- MONGO_INITDB_ROOT_PASSWORD, example: `MONGO_INITDB_ROOT_PASSWORD=example`
-- MONGODB_PORT, example: `MONGODB_PORT=27017`
-- MONGODB_ROOT_USER, example: `MONGODB_ROOT_USER=root`
-- MONGODB_ROOT_PASSWORD, example: `MONGODB_ROOT_PASSWORD=example`
-- MONGODB_ROOT_HASHED_PASSWORD, (see instructions below) example: `MONGODB_ROOT_HASHED_PASSWORD=$2y$12$0J`
-- JWT_SECRET, example: `JWT_SECRET=example`
-- JWT_ALGORITHM, example: `JWT_ALGORITHM=HS256`
-
-Further instructions for the MONGODB_ROOT_HASHED_PASSWORD environment variable.  
-To generate a hashed password for the MongoDB root user, you can use the following command:
-
+To build and start the application, make sure to create a `.env` file in the root directory based on the `.env.example` file. The `.env` file contains the environment variables that are used by the application. Regarding the MONGODB_HASHED_ROOT_PASSWORD environment variable in the `.env` file, you can use the following command to generate a hashed password for the MongoDB root user:  
 `python3 -c 'import bcrypt; print(bcrypt.hashpw("<MONGODB_ROOT_PASSWORD>".encode(), bcrypt.gensalt()).decode())`
 
 where `<MONGODB_ROOT_PASSWORD>` is the password you want to use for the MongoDB root user. The output of the command is the hashed password that you can use for the MONGODB_ROOT_HASHED_PASSWORD environment variable. If you don't have Python and bcrypt installed, you can also use an online bcrypt generator like [this one](https://bcrypt-generator.com/).
@@ -65,6 +52,10 @@ where `<MONGODB_ROOT_USER>` and `<MONGODB_ROOT_PASSWORD>` are the credentials th
 ## Examples
 
 Examples are provided by the Swagger UI documentation page.
+
+## About the output format
+
+[Here](docs/climate_data.md) you can find a detailed description of the municipality data output format of the API.
 
 ## License
 
