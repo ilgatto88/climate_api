@@ -10,6 +10,7 @@ PyJWT
 pydantic
 pydantic[email]
 pylint
+pyparsing
 pytest
 pytest-cov
 pytest-mock
