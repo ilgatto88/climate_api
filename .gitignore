@@ -161,8 +161,5 @@ cython_debug/
 
 # Project specific stuff
 .vscode/
-api_data/
 env_climate_api/
 data/mongo/
-junit/
-INFO.md
