@@ -9,13 +9,11 @@ motor
 PyJWT
 pydantic
 pydantic[email]
-pylint
 pyparsing
 pytest
 pytest-cov
 pytest-mock
 python-decouple
 python-dotenv
-requests
 ruff
 uvicorn[standard]
