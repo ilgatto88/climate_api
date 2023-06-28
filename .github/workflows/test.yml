@@ -29,7 +29,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install ruff pytest pytest-cov
           if [ -f src/requirements-dev.txt ]; then pip install -r src/requirements-dev.txt; fi
-          if [ -f api_data_processing/requirements-dataprocessing.txt ]; then pip install -r api_data_processing/requirements-dataprocessing.txt; fi
       - name: Static Code Linting with ruff
         run: |
           # default set of ruff rules with GitHub Annotations
