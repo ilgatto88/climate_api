@@ -1,14 +1,16 @@
 FROM python:3.10.6
 
-WORKDIR /
+RUN mkdir /project
 
-RUN mkdir /src
+WORKDIR /project
 
-COPY requirements.txt /src/requirements.txt
+RUN mkdir /project/src
 
-RUN pip install -r /src/requirements.txt
+COPY requirements.txt /project/src/requirements.txt
 
-COPY . /src
+RUN pip install -r /project/src/requirements.txt
+
+COPY . /project/src
 
 EXPOSE 8000
 
