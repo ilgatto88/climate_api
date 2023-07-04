@@ -17,7 +17,7 @@ logconfig_path = Path(__file__).parents[0] / "app_logging" / "logging_config.jso
 V1_PREFIX = "/api/v1"
 BASE_API_URI = "http://127.0.0.1:8000"
 API_NAME = "climATe API"
-API_VERSION = "0.2.0"
+API_VERSION = "0.3.0"
 
 
 def create_app() -> FastAPI:
@@ -51,11 +51,17 @@ app.include_router(
     tags=["Users"],
 )
 
+origins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
+
 app.add_middleware(
     CORSMiddleware,
+    allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET"],
+    allow_headers=["Content-Type"],
 )
 
 
