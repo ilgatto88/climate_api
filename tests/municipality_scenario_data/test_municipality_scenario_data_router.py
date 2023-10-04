@@ -6,45 +6,50 @@ from pytest_mock import MockFixture
 
 from tests.conftest import TEST_DATA_PATH
 
-ENDPOINT = "/api/v1/municipalitydata"
+ENDPOINT = "/api/v1/municipalitydata/scenario/"
+
+MAIN_KEYS = (
+    "municipalityId",
+    "climateParameter",
+    "source",
+    "temporalResolution",
+    "ensembleTimeRange",
+    "modelNames",
+    "rawData",
+    "statistics0D",
+    "statistics1D",
+)
 
 
 @pytest.mark.anyio
-async def test_get_municipality_data_by_id(client: AsyncClient, mocker: MockFixture):
-    sample_file_path = f"{TEST_DATA_PATH}/sample_municipality_data.json"
-    main_keys = ("meta", "historical", "ensemble")
-    meta_keys = (
-        "municipalityId",
-        "climateParameter",
-        "temporalResolution",
-        "analysisTimeRange",
-        "ensembleTimeRange",
-    )
+async def test_get_municipality_scenario_data_by_id_parameter_and_scenario(
+    client: AsyncClient, mocker: MockFixture
+):
+    sample_file_path = f"{TEST_DATA_PATH}/sample_municipality_scenario_data.json"
 
     with open(sample_file_path) as json_file:
         sample_data = json.load(json_file)
     mocker.patch(
-        "src.municipality_data.service.fetch_municipality_data_by_id",
+        "src.municipality_scenario_data.service.fetch_municipality_scenario_data_by_id_parameter_and_scenario",
         return_value=sample_data,
         status_code=200,
     )
 
-    response = await client.get(f"{ENDPOINT}/10101")
+    response = await client.get(f"{ENDPOINT}/rcp26/tm/10101")
     assert response.status_code == 200
     assert type(response.json()) == dict
-    assert all(key in response.json() for key in main_keys)
-    assert all(key in response.json()["meta"] for key in meta_keys)
+    assert all(key in response.json() for key in MAIN_KEYS)
 
 
 @pytest.mark.anyio
-async def test_get_municipality_data_by_id_which_doesnt_exist(
+async def test_get_municipality_scenario_data_by_id_which_doesnt_exist(
     client: AsyncClient, mocker: MockFixture
 ):
     mocker.patch(
-        "src.municipality_data.service.fetch_municipality_data_by_id",
+        "src.municipality_scenario_data.service.fetch_municipality_scenario_data_by_id_parameter_and_scenario",
         return_value=None,
     )
-    response = await client.get(f"{ENDPOINT}/0")
+    response = await client.get(f"{ENDPOINT}/rcp26/tm/0")
     assert response.status_code == 404
     assert response.json() == {
         "detail": "There is no municipality data in the database with m_id=0"
@@ -54,34 +59,26 @@ async def test_get_municipality_data_by_id_which_doesnt_exist(
 @pytest.fixture
 def mock_jwt_bearer(mocker: MockFixture):
     mocker.patch(
-        "src.municipality_data.router.JWTBearer.__call__",
+        "src.municipality_scenario_data.router.JWTBearer.__call__",
         return_value=None,
     )
 
 
 @pytest.mark.anyio(scope="session")
-async def test_post_municipality_data(
+async def test_post_municipality_scenario_data(
     client: AsyncClient, mocker: MockFixture, mock_jwt_bearer: None
 ):
-    sample_file_path = f"{TEST_DATA_PATH}/sample_municipality_data.json"
-    main_keys = ("meta", "historical", "ensemble")
-    meta_keys = (
-        "municipalityId",
-        "climateParameter",
-        "temporalResolution",
-        "analysisTimeRange",
-        "ensembleTimeRange",
-    )
+    sample_file_path = f"{TEST_DATA_PATH}/sample_municipality_scenario_data.json"
 
     mocker.patch(
-        "src.municipality_data.service.fetch_municipality_data_by_id",
+        "src.municipality_data.service.fetch_municipality_scenario_data_by_id_parameter_and_scenario",
         return_value=None,
     )
 
     with open(sample_file_path) as json_file:
         sample_data = json.load(json_file)
     mocker.patch(
-        "src.municipality_data.service.create_municipality_data",
+        "src.municipality_scenario_data.service.create_municipality_scenario_data",
         return_value=sample_data,
         status_code=201,
     )
@@ -89,20 +86,19 @@ async def test_post_municipality_data(
     response = await client.post(ENDPOINT, json=sample_data)
     assert response.status_code == 201
     assert type(response.json()) == dict
-    assert all(key in response.json() for key in main_keys)
-    assert all(key in response.json()["meta"] for key in meta_keys)
+    assert all(key in response.json() for key in MAIN_KEYS)
 
 
 @pytest.mark.anyio
-async def test_post_municipality_data_with_existing_m_id(
+async def test_post_municipality_scenario_data_with_existing_m_id(
     client: AsyncClient, mocker: MockFixture, mock_jwt_bearer: None
 ):
-    sample_file_path = f"{TEST_DATA_PATH}/sample_municipality_data.json"
+    sample_file_path = f"{TEST_DATA_PATH}/sample_municipality_scenario_data.json"
     with open(sample_file_path) as json_file:
         sample_data = json.load(json_file)
 
     mocker.patch(
-        "src.municipality_data.service.fetch_municipality_data_by_id",
+        "src.municipality_scenario_data.service.fetch_municipality_scenario_data_by_id_parameter_and_scenario",
         return_value=sample_data,
     )
 

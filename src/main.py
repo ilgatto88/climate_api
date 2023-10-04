@@ -9,7 +9,10 @@ from fastapi.responses import RedirectResponse
 from src.app_logging.custom_logging import CustomizeLogger
 from src.auth import router as auth_router
 from src.municipality import router as municipality_router
-from src.municipality_data import router as municipality_data_router
+from src.municipality_historical_data import (
+    router as municipality_historical_data_router,
+)
+from src.municipality_scenario_data import router as municipality_scenario_data_router
 
 logger = logging.getLogger(__name__)
 logconfig_path = Path(__file__).parents[0] / "app_logging" / "logging_config.json"
@@ -17,7 +20,7 @@ logconfig_path = Path(__file__).parents[0] / "app_logging" / "logging_config.jso
 V1_PREFIX = "/api/v1"
 BASE_API_URI = "http://127.0.0.1:8000"
 API_NAME = "climATe API"
-API_VERSION = "0.3.0"
+API_VERSION = "0.4.0"
 
 
 def create_app() -> FastAPI:
@@ -36,9 +39,14 @@ def create_app() -> FastAPI:
 app = create_app()
 
 app.include_router(
-    municipality_data_router.router,
-    prefix=f"{V1_PREFIX}/municipalitydata",
-    tags=["Municipality Data"],
+    municipality_historical_data_router.router,
+    prefix=f"{V1_PREFIX}/municipalitydata/historical/",
+    tags=["Municipality Historical Data"],
+)
+app.include_router(
+    municipality_scenario_data_router.router,
+    prefix=f"{V1_PREFIX}/municipalitydata/scenario/",
+    tags=["Municipality Scenario Data"],
 )
 app.include_router(
     municipality_router.router,
