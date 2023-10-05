@@ -82,7 +82,7 @@ async def test_post_municipality_historical_data(
         status_code=201,
     )
 
-    response = await client.post(ENDPOINT, json=sample_data)
+    response = await client.post(f"{ENDPOINT}/tm/", json=sample_data)
     assert response.status_code == 201
     assert type(response.json()) == dict
     assert all(key in response.json() for key in MAIN_KEYS)
