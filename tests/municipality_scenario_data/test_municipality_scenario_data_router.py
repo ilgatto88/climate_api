@@ -37,7 +37,7 @@ async def test_get_municipality_scenario_data_by_id_parameter_and_scenario(
 
     response = await client.get(f"{ENDPOINT}/rcp26/tm/10707")
     assert response.status_code == 200
-    assert type(response.json()) == dict
+    assert isinstance(response.json(), dict)
     print(response.json().keys())
     assert all(key in response.json() for key in MAIN_KEYS)
 
@@ -87,7 +87,7 @@ async def test_post_municipality_scenario_data(
 
     response = await client.post(f"{ENDPOINT}/rcp26/tm/", json=sample_data)
     assert response.status_code == 201
-    assert type(response.json()) == dict
+    assert isinstance(response.json(), dict)
     assert all(key in response.json() for key in MAIN_KEYS)
 
 

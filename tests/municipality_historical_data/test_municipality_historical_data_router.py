@@ -35,7 +35,7 @@ async def test_get_municipality_historical_data_by_id_and_parameter(
 
     response = await client.get(f"{ENDPOINT}/tm/10101")
     assert response.status_code == 200
-    assert type(response.json()) == dict
+    assert isinstance(response.json(), dict)
     assert all(key in response.json() for key in MAIN_KEYS)
 
 
@@ -84,7 +84,7 @@ async def test_post_municipality_historical_data(
 
     response = await client.post(f"{ENDPOINT}/tm/", json=sample_data)
     assert response.status_code == 201
-    assert type(response.json()) == dict
+    assert isinstance(response.json(), dict)
     assert all(key in response.json() for key in MAIN_KEYS)
 
 

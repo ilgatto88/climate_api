@@ -51,7 +51,7 @@ async def test_remove_municipality_scenario_data_by_id_parameter_and_scenario():
 
 
 @pytest.mark.anyio
-async def test_remove_municipality_scenario_data_by_id_parameter_and_scenario_not_found():
+async def test_remove_municipality_scenario_data_by_id_param_and_scenario_not_found():
     municipality_data = (
         await service.remove_municipality_data_by_id_parameter_and_scenario(
             10707, "tm", "rcp26"
