@@ -103,6 +103,6 @@ async def test_post_municipality_historical_data_with_existing_m_id(
 
     response = await client.post(ENDPOINT, json=sample_data)
     assert response.status_code == 400
-    response_text_part1 = "There is already a municipality data "
-    response_text_part2 = "document in the database with m_id=10101"
+    response_text_part1 = "There is already a historical municipality data "
+    response_text_part2 = "document in the database with m_id=10101 and parameter='tm'"
     assert response.json() == {"detail": response_text_part1 + response_text_part2}
