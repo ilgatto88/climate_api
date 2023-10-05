@@ -6,7 +6,7 @@ from pytest_mock import MockFixture
 
 from tests.conftest import TEST_DATA_PATH
 
-ENDPOINT = "/api/v1/municipalitydata/historical/"
+ENDPOINT = "/api/v1/municipalitydata/historical"
 
 MAIN_KEYS = (
     "municipalityId",
