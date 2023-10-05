@@ -32,7 +32,7 @@ jobs:
       - name: Static Code Linting with ruff
         run: |
           # default set of ruff rules with GitHub Annotations
-          ruff --format=github --target-version=py37 .
+          ruff --output-format=github --target-version=py37 .
         continue-on-error: true
       - name: Start MongoDB
         uses: supercharge/mongodb-github-action@1.8.0
