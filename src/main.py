@@ -40,12 +40,12 @@ app = create_app()
 
 app.include_router(
     municipality_historical_data_router.router,
-    prefix=f"{V1_PREFIX}/municipalitydata/historical/",
+    prefix=f"{V1_PREFIX}/municipalitydata/historical",
     tags=["Municipality Historical Data"],
 )
 app.include_router(
     municipality_scenario_data_router.router,
-    prefix=f"{V1_PREFIX}/municipalitydata/scenario/",
+    prefix=f"{V1_PREFIX}/municipalitydata/scenario",
     tags=["Municipality Scenario Data"],
 )
 app.include_router(
