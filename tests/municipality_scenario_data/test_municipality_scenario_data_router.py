@@ -104,7 +104,7 @@ async def test_post_municipality_scenario_data_with_existing_m_id(
         return_value=sample_data,
     )
 
-    response = await client.post(ENDPOINT, json=sample_data)
+    response = await client.post(f"{ENDPOINT}/rcp26/tm/", json=sample_data)
     assert response.status_code == 400
     response_text_part1 = "There is already a municipality scenario data "
     response_text_part2 = (
