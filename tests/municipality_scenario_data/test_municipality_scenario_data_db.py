@@ -22,19 +22,20 @@ async def test_create_municipality_data():
         sample_data = MunicipalityScenarioData(**data)
     municipality_data = await service.create_scenario_municipality_data(sample_data)
     assert municipality_data is not None
-    assert municipality_data.municipalityId == 10101
+    assert municipality_data.municipalityId == 10707
     assert municipality_data.climateParameter == "tm"
+    assert municipality_data.source == "rcp26"
 
 
 @pytest.mark.anyio
 async def test_fetch_municipality_scenario_data_by_id_parameter_and_scenario():
     municipality_data = (
         await service.fetch_municipality_scenario_data_by_id_parameter_and_scenario(
-            10101, "tm", "rcp26"
+            10707, "tm", "rcp26"
         )
     )
     assert municipality_data is not None
-    assert municipality_data["municipalityId"] == 10101
+    assert municipality_data["municipalityId"] == 10707
     assert municipality_data["climateParameter"] == "tm"
     assert municipality_data["source"] == "rcp26"
 
@@ -43,7 +44,7 @@ async def test_fetch_municipality_scenario_data_by_id_parameter_and_scenario():
 async def test_remove_municipality_scenario_data_by_id_parameter_and_scenario():
     municipality_data = (
         await service.remove_municipality_data_by_id_parameter_and_scenario(
-            10101, "tm", "rcp26"
+            10707, "tm", "rcp26"
         )
     )
     assert municipality_data is True
@@ -53,7 +54,7 @@ async def test_remove_municipality_scenario_data_by_id_parameter_and_scenario():
 async def test_remove_municipality_scenario_data_by_id_parameter_and_scenario_not_found():
     municipality_data = (
         await service.remove_municipality_data_by_id_parameter_and_scenario(
-            10101, "tm", "rcp26"
+            10707, "tm", "rcp26"
         )
     )
     assert municipality_data is False

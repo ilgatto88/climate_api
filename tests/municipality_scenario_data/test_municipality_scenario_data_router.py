@@ -35,7 +35,7 @@ async def test_get_municipality_scenario_data_by_id_parameter_and_scenario(
         status_code=200,
     )
 
-    response = await client.get(f"{ENDPOINT}/rcp26/tm/10101")
+    response = await client.get(f"{ENDPOINT}/rcp26/tm/10707")
     assert response.status_code == 200
     assert type(response.json()) == dict
     assert all(key in response.json() for key in MAIN_KEYS)
@@ -106,5 +106,5 @@ async def test_post_municipality_scenario_data_with_existing_m_id(
     response = await client.post(ENDPOINT, json=sample_data)
     assert response.status_code == 400
     response_text_part1 = "There is already a municipality data "
-    response_text_part2 = "document in the database with m_id=10101"
+    response_text_part2 = "document in the database with m_id=10707"
     assert response.json() == {"detail": response_text_part1 + response_text_part2}
