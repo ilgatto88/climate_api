@@ -52,7 +52,8 @@ async def test_get_municipality_scenario_data_by_id_which_doesnt_exist(
     response = await client.get(f"{ENDPOINT}/rcp26/tm/0")
     assert response.status_code == 404
     assert response.json() == {
-        "detail": "There is no municipality data in the database with m_id=0"
+        "detail": "There is no municipality scenario data in "
+        "the database with m_id=0, parameter='tm' and scenario='rcp26'"
     }
 
 
@@ -71,7 +72,7 @@ async def test_post_municipality_scenario_data(
     sample_file_path = f"{TEST_DATA_PATH}/sample_municipality_scenario_data.json"
 
     mocker.patch(
-        "src.municipality_data.service.fetch_municipality_scenario_data_by_id_parameter_and_scenario",
+        "src.municipality_scenario_data.service.fetch_municipality_scenario_data_by_id_parameter_and_scenario",
         return_value=None,
     )
 

@@ -50,7 +50,8 @@ async def test_get_municipality_historical_data_by_id_which_doesnt_exist(
     response = await client.get(f"{ENDPOINT}/tm/0")
     assert response.status_code == 404
     assert response.json() == {
-        "detail": "There is no municipality data in the database with m_id=0"
+        "detail": "There is no historical municipality data "
+        "in the database with m_id=0 and parameter='tm'"
     }
 
 
@@ -69,7 +70,7 @@ async def test_post_municipality_historical_data(
     sample_file_path = f"{TEST_DATA_PATH}/sample_municipality_historical_data.json"
 
     mocker.patch(
-        "src.municipality_data.service.fetch_municipality_historical_data_by_id_and_parameter",
+        "src.municipality_historical_data.service.fetch_municipality_historical_data_by_id_and_parameter",
         return_value=None,
     )
 
