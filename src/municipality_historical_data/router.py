@@ -14,7 +14,7 @@ router = APIRouter()
 
 
 @router.get(
-    "/historical/{parameter}/{m_id}",
+    "/{parameter}/{m_id}",
     name="Get municipality data by ID and climate parameter",
     response_model=MunicipalityHistoricalData,
     status_code=status.HTTP_200_OK,
@@ -30,7 +30,7 @@ async def get_historical_municipality_data_by_id_and_parameter(
 
 
 @router.post(
-    "/historical/{parameter}/",
+    "/{parameter}/",
     name="Create new historical municipality data for the selected climate parameter",
     response_model=MunicipalityHistoricalData,
     status_code=status.HTTP_201_CREATED,
