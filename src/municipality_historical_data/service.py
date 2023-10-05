@@ -3,7 +3,7 @@ from typing import Any
 from src.database import climate_data
 from src.municipality_historical_data.models import MunicipalityHistoricalData
 
-municipality_historical_data_collection = climate_data.MunicipalityDataHistorical
+municipality_historical_data_collection = climate_data.MunicipalityHistoricalData
 
 
 async def fetch_municipality_historical_data_by_id_and_parameter(
