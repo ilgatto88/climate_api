@@ -77,7 +77,7 @@ async def test_post_municipality_historical_data(
     with open(sample_file_path) as json_file:
         sample_data = json.load(json_file)
     mocker.patch(
-        "src.municipality_historical_data.service.create_municipality_historical_data",
+        "src.municipality_historical_data.service.create_historical_municipality_data",
         return_value=sample_data,
         status_code=201,
     )
