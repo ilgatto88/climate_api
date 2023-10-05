@@ -21,6 +21,7 @@ class MunicipalityScenarioData(BaseModel):
     source: str = Field(min_length=1, max_length=100)
     climateParameter: str = Field(min_length=1, max_length=50)
     temporalResolution: str = Field(min_length=1, max_length=50)
+    ensembleTimeRange: list[int] = Field(min_items=1, max_items=150)
     modelNames: list[str] = Field(min_items=1, max_items=20)
     rawData: dict[str, list[Optional[float]]]
     statistics1D: Statistics1D
