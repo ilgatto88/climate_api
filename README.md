@@ -5,7 +5,7 @@
 
 ## Project Description
 
-The climATe API is a RESTful API that provides climate data for Austria. The original data is provided by the Austrian Central Institute for Meteorology and Geodynamics (ZAMG) through their data portal called [Datahub](https://data.hub.zamg.ac.at/). This data was processed into it's final form by the creator of the API. The API is written in Python using the [FastAPI](https://fastapi.tiangolo.com/) framework and the whole application is containerized using [Docker](https://www.docker.com/).
+The climATe API is a RESTful API that provides climate data for Austria. The original data is provided by the Zentralanstalt für Meteorologie und Geodynamik (ZAMG) through their data portal called [Datahub](https://data.hub.zamg.ac.at/). This data was processed into it's final form by the creator of the API. The API is written in Python using the [FastAPI](https://fastapi.tiangolo.com/) framework and the whole application is containerized using [Docker](https://www.docker.com/).
 
 ## Table of Contents
 
@@ -33,10 +33,11 @@ where `<MONGODB_ROOT_PASSWORD>` is the password you want to use for the MongoDB 
 ## Usage and API Documentation
 
 If you have built the application locally, you can check if it is running by opening the following URL in your browser: `http://127.0.0.1:8000`. You will be automatically redirected to the Swagger UI documentation page of the API. If you want to use the Redoc documentation page, you can open the following URL in your browser: `http://127.0.0.01:8000/redoc`.  
-As visible in the Swagger UI documentation page, the API has currently two endpoints:
+As visible in the Swagger UI documentation page, the API has currently three endpoints:
 
 - `/api/v1/municipalities/`
-- `/api/v1/municipalitydata/`
+- `/api/v1/municipalitydata/historical/<parameter>/`
+- `/api/v1/municipalitydata/scenario/<scenario}>/parameter>`
 
 POST, PUT or DELETE methods are only allowed for the admin user. The admin user is the user that is created when the MongoDB container is started for the first time. The admin user credentials are the ones that you have specified in the `.env` file. To authenticate using the Swagger UI, select the POST method at the Users section and click on the "Try it out" button. Then enter the following JSON in the Request Body field:
 
