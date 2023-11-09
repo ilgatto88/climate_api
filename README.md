@@ -3,6 +3,8 @@
 [![CI](https://github.com/ilgatto88/climate_api/actions/workflows/test.yml/badge.svg)](https://github.com/ilgatto88/climate_api/actions/workflows/test.yml) [![codecov](https://codecov.io/github/ilgatto88/climate_api/branch/master/graph/badge.svg?token=CG91QI9FRV)](https://codecov.io/github/ilgatto88/climate_api) [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/charliermarsh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)  
 [![License: CC BY-NC SA 4.0](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-orange)](https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode)
 
+## CS50 Video Demonstration: [Link](https://www.youtube.com/watch?v=TJLsOpyqeDY)
+
 ## Project Description
 
 The climATe API is a RESTful API that provides climate data for Austria. The original data is provided by the Zentralanstalt für Meteorologie und Geodynamik (ZAMG) through their data portal called [Datahub](https://data.hub.zamg.ac.at/). This data was processed into it's final form by the creator of the API. The API is written in Python using the [FastAPI](https://fastapi.tiangolo.com/) framework and the whole application is containerized using [Docker](https://www.docker.com/).
