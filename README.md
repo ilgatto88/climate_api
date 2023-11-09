@@ -5,6 +5,8 @@
 
 ## CS50 Video Demonstration: [Link](https://www.youtube.com/watch?v=TJLsOpyqeDY)
 
+## GitHub Repository: [Link](https://github.com/ilgatto88/climate_api)
+
 ## Project Description
 
 The climATe API is a RESTful API that provides climate data for Austria. The original data is provided by the Zentralanstalt für Meteorologie und Geodynamik (ZAMG) through their data portal called [Datahub](https://data.hub.zamg.ac.at/). This data was processed into it's final form by the creator of the API. The API is written in Python using the [FastAPI](https://fastapi.tiangolo.com/) framework and the whole application is containerized using [Docker](https://www.docker.com/).
