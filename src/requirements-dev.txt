@@ -1,7 +1,7 @@
 bcrypt
 black
 email-validator
-fastapi[all]==0.97.0
+fastapi[all]==0.109.1
 gunicorn
 httpx
 loguru
